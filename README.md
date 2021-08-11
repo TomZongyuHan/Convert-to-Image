@@ -53,4 +53,4 @@ COMP5703_CS27-1
 Feel free to dive in! [Open an issue]() or submit PRs.
 
 ## License
-[MIT](LICENSE) © Eden © Tom
+[MIT](LICENSE) © Eden © Tom © Brooks
