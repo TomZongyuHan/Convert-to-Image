@@ -20,7 +20,7 @@ processDataset <- function(path, normname) {
   for (name in removeNames) {
     rowdata <- rowdata[!grepl(name, rowdata[, 1]), ]
   }
-
+  
   # Save colume name and row name
   cn <- rowdata[, 1]
   rn <- rowdata[1, ]
@@ -28,19 +28,19 @@ processDataset <- function(path, normname) {
   for (name in rn[-1]) {
     rn_c <- c(rn_c, name)
   }
-
+  
   # Discard first row and first column (row name, column name)
   rowdata <- rowdata[-1, -1]
-
+  
   # Convert character data in the matrix to double data using the mode() method
   mode(rowdata) <- "double"
-
+  
   # Check whether NA is still present in the matrix
   any(is.na(rowdata))
-
+  
   # Transpose the matrix, ready for use in the normalization method
   rowdata <- t(rowdata)
-
+  
   # Run different normalize methods accroding to input param
   if (normname == "linnorm") {
     rowdata <- Linnorm(rowdata, minNonZeroPortion = 0.2)
@@ -54,27 +54,43 @@ processDataset <- function(path, normname) {
     rowdata <- cpm(rowdata, log=FALSE)
   } else if (normname == "seurat") {
     rowdata <- as.matrix(NormalizeData(rowdata))
-  }
-
+  } 
+  
   # Add the rowname and colname of dataset
   rownames(rowdata) <- rn[-1]
   colnames(rowdata) <- cn[-1]
-
+  
   # Output csv file
   filename <- paste(substring(path, 1, nchar(path) - 12), normname, ".csv", sep = "")
   write.table(rowdata, filename, sep = ",", col.names = NA)
 }
 
-# Run normalization
-processDataset("Datasets/TabulaMuris_Trachea_FACS-RowCount.csv", "linnorm")
-processDataset("Datasets/TabulaMuris_Trachea_FACS-RowCount.csv", "scran")
-processDataset("Datasets/TabulaMuris_Trachea_FACS-RowCount.csv", "tmm")
-processDataset("Datasets/TabulaMuris_Trachea_FACS-RowCount.csv", "scone")
-processDataset("Datasets/TabulaMuris_Trachea_FACS-RowCount.csv", "cpm")
-processDataset("Datasets/TabulaMuris_Trachea_FACS-RowCount.csv", "seurat")
-processDataset("Datasets/TabulaMuris_Thymus_10X-RowCount.csv", "linnorm")
-processDataset("Datasets/TabulaMuris_Thymus_10X-RowCount.csv", "scran")
-processDataset("Datasets/TabulaMuris_Thymus_10X-RowCount.csv", "tmm")
-processDataset("Datasets/TabulaMuris_Thymus_10X-RowCount.csv", "scone")
-processDataset("Datasets/TabulaMuris_Thymus_10X-RowCount.csv", "cpm")
-processDataset("Datasets/TabulaMuris_Thymus_10X-RowCount.csv", "seurat")
+
+# Run normalization - Tom
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "scran")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "scone")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "seurat")
+
+# Run normalization - Brooks
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "scran")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "scone")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "seurat")
+
