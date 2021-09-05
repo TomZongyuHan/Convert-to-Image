@@ -65,7 +65,7 @@ processDataset <- function(path, normname) {
   write.table(rowdata, filename, sep = ",", col.names = NA)
 }
 
-# Run normalization - Bruce Yu
+# Run normalization - Bruce
 processDataset("TabulaMuris_Heart_10X-RowCount.csv", "linnorm")
 processDataset("TabulaMuris_Heart_10X-RowCount.csv", "scran")
 processDataset("TabulaMuris_Heart_10X-RowCount.csv", "tmm")
@@ -78,3 +78,45 @@ processDataset("TabulaMuris_Liver_10X-RowCount.csv", "tmm")
 processDataset("TabulaMuris_Liver_10X-RowCount.csv", "scone")
 processDataset("TabulaMuris_Liver_10X-RowCount.csv", "cpm")
 processDataset("TabulaMuris_Liver_10X-RowCount.csv", "seurat")
+
+# Run normalization - Ariel
+processDataset("xin-RowCount.csv", "linnorm")
+processDataset("xin-RowCount.csv", "scran")
+processDataset("xin-RowCount.csv", "tmm")
+processDataset("xin-RowCount.csv", "scone")
+processDataset("xin-RowCount.csv", "cpm")
+processDataset("xin-RowCount.csv", "seurat")
+processDataset("tasic-rpkms-RowCount.csv", "linnorm")
+processDataset("tasic-rpkms-RowCount.csv", "scran")
+processDataset("tasic-rpkms-RowCount.csv", "tmm")
+processDataset("tasic-rpkms-RowCount.csv", "scone")
+processDataset("tasic-rpkms-RowCount.csv", "cpm")
+processDataset("tasic-rpkms-RowCount.csv", "seurat")
+
+# Run normalization - Tom
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "scran")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "scone")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "seurat")
+
+# Run normalization - Brooks
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "scran")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "scone")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "seurat")
