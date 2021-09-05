@@ -14,7 +14,7 @@ processDataset <- function(path, normname) {
   # Read the CSV file and convert it to matrix format
   rowdata <- read.table(path, sep = ",", header = FALSE)
   rowdata <- as.matrix(rowdata)
-  
+
   # Delete the rows containing remove names
   removeNames <- c("alpha.contaminated", "beta.contaminated", "delta.contaminated", "Excluded", "gamma.contaminated", "miss", "NA","not applicable", "unclassified", "unknown", "Unknown", "zothers")
   for (name in removeNames) {
@@ -78,3 +78,31 @@ processDataset("tasic-rpkms-RowCount.csv", "tmm")
 processDataset("tasic-rpkms-RowCount.csv", "scone")
 processDataset("tasic-rpkms-RowCount.csv", "cpm")
 processDataset("tasic-rpkms-RowCount.csv", "seurat")
+
+# Run normalization - Tom
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "scran")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "scone")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", "seurat")
+
+# Run normalization - Brooks
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "scran")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "scone")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", "seurat")
