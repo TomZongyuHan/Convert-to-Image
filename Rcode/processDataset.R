@@ -49,7 +49,7 @@ processDataset <- function(path, normname) {
   } else if (normname == "tmm") {
     rowdata <- TMM_FN(rowdata)
   } else if (normname == "scone") {
-    rowdata <- SCRAN_FN(rowdata)
+    rowdata <- DESEQ_FN(rowdata)
   } else if (normname == "cpm") {
     rowdata <- cpm(rowdata, log=FALSE)
   } else if (normname == "seurat") {
