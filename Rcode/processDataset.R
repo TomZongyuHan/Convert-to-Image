@@ -8,7 +8,7 @@ library(Seurat)
 # Input:
 #   path: data csv file path
 #   normName: normalization method name, should be linnorm/scone/ttm/scran/cpm/seurat
-# Rerutn:
+# Return:
 #   processed data: rows - genes, columns - cells
 processDataset <- function(path, normname) {
   # Read the CSV file and convert it to matrix format
@@ -20,7 +20,7 @@ processDataset <- function(path, normname) {
   for (name in removeNames) {
     rowdata <- rowdata[!grepl(name, rowdata[, 1]), ]
   }
-  
+
   # Save colume name and row name
   cn <- rowdata[, 1]
   rn <- rowdata[1, ]
@@ -64,6 +64,20 @@ processDataset <- function(path, normname) {
   filename <- paste(substring(path, 1, nchar(path) - 12), normname, ".csv", sep = "")
   write.table(rowdata, filename, sep = ",", col.names = NA)
 }
+
+# Run normalization - Eden
+processDataset("yan-RowCount.csv", "linnorm")
+processDataset("yan-RowCount.csv", "scran")
+processDataset("yan-RowCount.csv", "tmm")
+processDataset("yan-RowCount.csv", "scone")
+processDataset("yan-RowCount.csv", "cpm")
+processDataset("yan-RowCount.csv", "seurat")
+processDataset("zeisel-RowCount.csv", "linnorm")
+processDataset("zeisel-RowCount.csv", "scran")
+processDataset("zeisel-RowCount.csv", "tmm")
+processDataset("zeisel-RowCount.csv", "scone")
+processDataset("zeisel-RowCount.csv", "cpm")
+processDataset("zeisel-RowCount.csv", "seurat")
 
 # Run normalization - Bruce
 processDataset("TabulaMuris_Heart_10X-RowCount.csv", "linnorm")
