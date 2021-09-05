@@ -65,6 +65,20 @@ processDataset <- function(path, normname) {
   write.table(rowdata, filename, sep = ",", col.names = NA)
 }
 
+# Run normalization - Bruce
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", "seurat")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", "linnorm")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", "scran")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", "tmm")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", "scone")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", "cpm")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", "seurat")
+
 # Run normalization - Ariel
 processDataset("xin-RowCount.csv", "linnorm")
 processDataset("xin-RowCount.csv", "scran")
