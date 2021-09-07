@@ -10,10 +10,16 @@ library(Seurat) # for seurat
 #   normName: normalization method name, should be linnorm/scone/ttm/scran/cpm/seurat
 # Return:
 #   processed data: rows - genes, columns - cells
-processDataset <- function(path) {
+processDataset <- function(path, isRowCount) {
   # Read the CSV file and convert it to matrix format
   rowdata <- read.table(path, sep = ",", header = FALSE)
   rowdata <- as.matrix(rowdata)
+
+  # Determine if the raw data need to transpose
+  if(!isRowCount){
+    # Transpose the matrix
+    rowdata <- t(rowdata)
+  }
 
   # Delete the rows containing remove names
   removeNames <- c("alpha.contaminated", "beta.contaminated", "delta.contaminated", "Excluded", "gamma.contaminated", "miss", "NA","not applicable", "unclassified", "unknown", "Unknown", "zothers")
@@ -77,7 +83,6 @@ processDataset <- function(path) {
   filename_cpm <- paste(substring(path, 1, nchar(path) - 12), "cpm.csv", sep = "")
   filename_seurat <- paste(substring(path, 1, nchar(path) - 12), "seurat.csv", sep = "")
 
-
   write.table(rowdata_linnorm, filename_linnorm, sep = ",", col.names = NA)
   write.table(rowdata_scran, filename_scran, sep = ",", col.names = NA)
   write.table(rowdata_tmm, filename_tmm, sep = ",", col.names = NA)
@@ -87,13 +92,20 @@ processDataset <- function(path) {
 }
 
 # Run normalization
-processDataset("TabulaMuris_Heart_10X-RowCount.csv")
-processDataset("TabulaMuris_Liver_10X-RowCount.csv")
-processDataset("TabulaMuris_Marrow_10X-RowCount.csv")
-processDataset("TabulaMuris_Marrow_FACS-RowCount.csv")
-processDataset("TabulaMuris_Thymus_10X-RowCount.csv")
-processDataset("TabulaMuris_Trachea_FACS-RowCount.csv")
-processDataset("tasic-rpkms-RowCount.csv")
-processDataset("xin-RowCount.csv")
-processDataset("yan-RowCount.csv")
-processDataset("zeisel-RowCount.csv")
+processDataset("TabulaMuris_Heart_10X-RowCount.csv", TRUE)
+processDataset("TabulaMuris_Liver_10X-RowCount.csv", TRUE)
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv", TRUE)
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv", TRUE)
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv", TRUE)
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv", TRUE)
+processDataset("tasic-rpkms-RowCount.csv", TRUE)
+processDataset("xin-RowCount.csv", TRUE)
+processDataset("yan-RowCount.csv", TRUE)
+processDataset("zeisel-RowCount.csv", TRUE)
+processDataset("Datasets/old/baron-mouse-RawCount.csv", TRUE)
+processDataset("Datasets/old/deng-reads-RawCount.csv", FALSE)
+processDataset("Datasets/old/manno_human-RawCount.csv", TRUE)
+processDataset("Datasets/old/manno_mouse-RawCount.csv", TRUE)
+processDataset("Datasets/old/TabulaMuris_Heart_10X-RawCount.csv", TRUE)
+processDataset("Datasets/old/TabulaMuris_Heart_FACS-RawCount.csv", TRUE)
+processDataset("Datasets/old/zhengmix4uneq-RawCount.csv", FALSE)
