@@ -1,8 +1,8 @@
 # Import libraries
-library(Linnorm)
+library(Linnorm) # for linnorm
 library(scone) # for scone/TTM/scran
 library(edgeR) # for cpm
-library(Seurat)
+library(Seurat) # for seurat
 
 # This function used to read, clean and normalize data
 # Input:
@@ -84,3 +84,15 @@ processDataset <- function(path) {
   write.table(rowdata_cpm, filename_cpm, sep = ",", col.names = NA)
   write.table(rowdata_seurat, filename_seurat, sep = ",", col.names = NA)
 }
+
+# Run normalization
+processDataset("TabulaMuris_Heart_10X-RowCount.csv")
+processDataset("TabulaMuris_Liver_10X-RowCount.csv")
+processDataset("TabulaMuris_Marrow_10X-RowCount.csv")
+processDataset("TabulaMuris_Marrow_FACS-RowCount.csv")
+processDataset("TabulaMuris_Thymus_10X-RowCount.csv")
+processDataset("TabulaMuris_Trachea_FACS-RowCount.csv")
+processDataset("tasic-rpkms-RowCount.csv")
+processDataset("xin-RowCount.csv")
+processDataset("yan-RowCount.csv")
+processDataset("zeisel-RowCount.csv")
