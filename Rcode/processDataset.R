@@ -8,7 +8,7 @@ library(Seurat) # for seurat
 # Input:
 #   path: data csv file path
 #   normName: normalization method name, should be linnorm/scone/ttm/scran/cpm/seurat
-# Rerutn:
+# Return:
 #   processed data: rows - genes, columns - cells
 processDataset <- function(path) {
   # Read the CSV file and convert it to matrix format
@@ -68,7 +68,7 @@ processDataset <- function(path) {
   colnames(rowdata_cpm) <- cn[-1]
   rownames(rowdata_seurat) <- rn[-1]
   colnames(rowdata_seurat) <- cn[-1]
-
+  
   # Output csv file
   filename_linnorm <- paste(substring(path, 1, nchar(path) - 12), "linnorm.csv", sep = "")
   filename_scran <- paste(substring(path, 1, nchar(path) - 12), "scran.csv", sep = "")
@@ -76,6 +76,7 @@ processDataset <- function(path) {
   filename_scone <- paste(substring(path, 1, nchar(path) - 12), "scone.csv", sep = "")
   filename_cpm <- paste(substring(path, 1, nchar(path) - 12), "cpm.csv", sep = "")
   filename_seurat <- paste(substring(path, 1, nchar(path) - 12), "seurat.csv", sep = "")
+
 
   write.table(rowdata_linnorm, filename_linnorm, sep = ",", col.names = NA)
   write.table(rowdata_scran, filename_scran, sep = ",", col.names = NA)
