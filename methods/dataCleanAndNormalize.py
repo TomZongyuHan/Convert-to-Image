@@ -20,11 +20,18 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     # Import R's "utils" package
     utils = importr('utils')
 
+    # Transform variable 'isRowCount' to String
+    if(isRowCount):
+        isRowCount = 'TRUE'
+    else:
+        isRowCount = 'FALSE'
+
     # Prepare R variable
     filepath = '\"' + filepath + '\"'
     isRowCount = '\"' + isRowCount + '\"'
     normName = '\"' + normName + '\"'
 
+    # Transform python String to R String
     robjects.r('''
         path  <- gsub("to", "",''' + filepath + ''')
         isRowCount <- gsub("to", "",''' + isRowCount + ''')
@@ -126,5 +133,5 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
 
 # Test
 # filepath = '../originalDatasets/' + 'yan-RowCount.csv'
-# normalized_dataset = dataCleanAndNormalize(filepath, "TRUE", "linnorm")
+# normalized_dataset = dataCleanAndNormalize(filepath, True, "linnorm")
 # print(normalized_dataset)
