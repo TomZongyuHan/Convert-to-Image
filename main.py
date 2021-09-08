@@ -24,7 +24,7 @@ def main(filename, isRowCount):
     normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
     drNames = ['pca', 'kpca', 'tsne', 'phate']
     icNames = ['deepinsight', 'cpcr', 'gaf']
-    CNNNames = ['alexnet', 'vgg', 'squeezenet', 'resnet', 'densenet']
+    CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
 
     # Run all methods and output results
     finishNum = 0 # use a number to calculate how many method have finished
