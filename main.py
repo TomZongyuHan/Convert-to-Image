@@ -1,12 +1,13 @@
+# Main pipeline of the project
 # Import library and methods
 import sys
-
 from methods import dataCleanAndNormalize
 from methods import dimensionalityReduce
 from methods import imageConvert
-from methods import imageAugumentation
+from methods import imageEnhance
 from methods import CNNTrain
 from methods import calculateAccuracy
+
 
 # Main method include all pipeline
 # Input:
@@ -19,8 +20,8 @@ from methods import calculateAccuracy
 #   result files will be store in ./results
 def main(filename, isRowCount):
     # Set file path
-    filepath = './originalDatasets/' + filename
-    
+    filepath = 'originalDatasets/' + filename
+
     # Set all methods name list
     normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
     drNames = ['pca', 'kpca', 'tsne', 'phate']
@@ -28,28 +29,31 @@ def main(filename, isRowCount):
     CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
 
     # Run all methods and output results
-    finishNum = 0 # use a number to calculate how many method have finished
-    allNum = len(normNames) + len(drNames) + len(icNames) + len(CNNNames) # calculate how many methods exist
+    finishNum = 0  # use a number to calculate how many method have finished
+    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames)  # calculate how many methods exist
     for normName in normNames:
         # Data clean and normalize
-        normalizedDataset = dataCleanAndNormalize(filepath, isRowCount, normName)
+        normalizedDataset = dataCleanAndNormalize.dataCleanAndNormalize(filepath, isRowCount, normName)
         for drName in drNames:
             # Dimensionality reduce
-            drDataset = dimensionalityReduce(normalizedDataset, drName)
+            drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName)
             for icName in icNames:
-                imageDataset = imageConvert(drDataset, icName) # Image convert
-                enhancedDataset = imageAugumentation(imageDataset) # Image enhance
+                imageDataset = imageConvert.imageConvert(drDataset, icName)  # Image convert
+                enhancedDataset = imageEnhance.imageEnhance(imageDataset)  # Image enhance
                 for CNNName in CNNNames:
-                    result = CNNTrain(enhancedDataset, CNNName) # CNN train
-                    calculateAccuracy(result) # Calculate accuracy
+                    result = CNNTrain.CNNTrain(enhancedDataset, CNNName)  # CNN train
+                    calculateAccuracy.calculateAccuracy(result)  # Calculate accuracy
                     finishNum += 1
-                    print('----- ' + 
-                        normName + '-' + 
-                        drName + '-' + 
-                        icName + '-' + 
-                        CNNName + ' finish ' + 
-                        finishNum + '/' + allNum)
+                    print('----- ' +
+                          normName + '-' +
+                          drName + '-' +
+                          icName + '-' +
+                          CNNName + ' finish ' +
+                          str(finishNum) + '/' + str(allNum))
 
-# main function entry
+    print('!!!!! All process of dataset: ' + filename + ' is completed, see results in /results !!!!!')
+
+
+# Main function entry
 if __name__ == '__main__':
-    main(sys.argv[0], sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
