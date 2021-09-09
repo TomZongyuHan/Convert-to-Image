@@ -34,19 +34,22 @@ def imageConvert(drResult, icName):
             x, y, test_size=0.2, random_state=23, stratify=y)
 
         ln = LogScaler()
-        X_train = ln.fit_transform(X_train)
-        X_test = ln.transform(X_test)
+        X_train_norm = ln.fit_transform(X_train)
+        X_test_norm = ln.transform(X_test)
 
         # Implement method, Deepinsight need given drmethod
-        drMethod = PCA(n_components=0.95)
         it = ImageTransformer(feature_extractor="pca",
             pixels=50, random_state=1701, 
             n_jobs=-1)
-        
+
+        # it.fit(X_train_norm, plot=False)
+        #
+        # X_train_img = it.fit_transform(X_train_norm)
+
         # Train and get image data
         print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
-        X_train_img = it.fit_transform(X_train)
-        X_test_img = it.fit_transform(X_test)
+        X_train_img = it.fit_transform(X_train_norm)
+        X_test_img = it.transform(X_test_norm)
         imageDataset = [X_train_img, X_test_img]
     elif icName == 'cpcr':
         imageDataset = 1

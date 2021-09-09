@@ -20,14 +20,16 @@
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:zhan9295" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:hliu7674" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d42445d6-8dbf-4375-b326-5d32893cc90f" name="Default Changelist" comment="data augmentation version 1&#10;- 20210909&#10;- Brooks Liu">
+    <list default="true" id="d42445d6-8dbf-4375-b326-5d32893cc90f" name="Default Changelist" comment="merge image-converting part with imageAugumentation part&#10;- 20210909&#10;- Brooks Liu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/methods/imageAugumentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/methods/imageAugumentation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/methods/imageConvert.py" beforeDir="false" afterPath="$PROJECT_DIR$/methods/imageConvert.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.npy" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +67,7 @@
       <recent name="$PROJECT_DIR$/originalDatasets" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.imageAugumentation">
     <configuration name="imageAugumentation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="cs27-1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -79,6 +81,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/methods/imageAugumentation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="imageConvert" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cs27-1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/methods" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/methods/imageConvert.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -133,14 +156,15 @@
       <item itemvalue="Python.test" />
       <item itemvalue="Python.imageAugumentation" />
       <item itemvalue="Python.installDependencies" />
+      <item itemvalue="Python.imageConvert" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.imageAugumentation" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.imageConvert" />
         <item itemvalue="Python.installDependencies" />
         <item itemvalue="Python.imageAugumentation" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -169,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631178037259</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="merge image-converting part with imageAugumentation part&#10;- 20210909&#10;- Brooks Liu">
+      <created>1631193217513</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1631193217513</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,7 +214,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/zhan9295" />
+                        <option value="hliu7674" />
                       </list>
                     </value>
                   </entry>
@@ -199,7 +230,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pull from zhan9295 branch&#10;- 20210909&#10;- Brooks Liu" />
     <MESSAGE value="data augmentation version 1&#10;- 20210909&#10;- Brooks Liu" />
-    <option name="LAST_COMMIT_MESSAGE" value="data augmentation version 1&#10;- 20210909&#10;- Brooks Liu" />
+    <MESSAGE value="merge image-converting part with imageAugumentation part&#10;- 20210909&#10;- Brooks Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge image-converting part with imageAugumentation part&#10;- 20210909&#10;- Brooks Liu" />
   </component>
   <component name="WindowStateProjectService">
     <state x="369" y="192" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1631161993170">
@@ -207,42 +239,46 @@
     </state>
     <state x="369" y="192" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1631161993170" />
     <state x="369" y="192" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1024@0.25.1792.1024" timestamp="1631161862153" />
+    <state x="548" y="274" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1631200533448">
+      <screen x="0" y="25" width="1792" height="1023" />
+    </state>
+    <state x="548" y="274" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1631200533448" />
     <state x="746" y="291" key="FileChooserDialogImpl" timestamp="1631183962541">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
     <state x="746" y="291" key="FileChooserDialogImpl/0.25.1792.1021@0.25.1792.1021" timestamp="1631183962541" />
-    <state width="779" height="207" key="GridCell.Tab.0.bottom" timestamp="1631192979775">
+    <state width="778" height="207" key="GridCell.Tab.0.bottom" timestamp="1631212085524">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
-    <state width="803" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920937" />
-    <state width="779" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979775" />
-    <state width="781" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410663" />
-    <state width="894" height="268" key="GridCell.Tab.0.bottom/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427036" />
-    <state width="1189" height="268" key="GridCell.Tab.0.bottom/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364408" />
-    <state width="779" height="207" key="GridCell.Tab.0.center" timestamp="1631192979774">
+    <state width="778" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686570" />
+    <state width="778" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1631212085524" />
+    <state width="778" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1024@0.25.1792.1024" timestamp="1631199020178" />
+    <state width="778" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1026@0.25.1792.1026" timestamp="1631196582896" />
+    <state width="778" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1027@0.25.1792.1027" timestamp="1631195548982" />
+    <state width="778" height="207" key="GridCell.Tab.0.center" timestamp="1631212085523">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
-    <state width="803" height="207" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920936" />
-    <state width="779" height="207" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979774" />
-    <state width="781" height="207" key="GridCell.Tab.0.center/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410662" />
-    <state width="894" height="268" key="GridCell.Tab.0.center/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427035" />
-    <state width="1189" height="268" key="GridCell.Tab.0.center/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364407" />
-    <state width="779" height="207" key="GridCell.Tab.0.left" timestamp="1631192979774">
+    <state width="778" height="207" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686569" />
+    <state width="778" height="207" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1631212085523" />
+    <state width="778" height="207" key="GridCell.Tab.0.center/0.25.1792.1024@0.25.1792.1024" timestamp="1631199020177" />
+    <state width="778" height="207" key="GridCell.Tab.0.center/0.25.1792.1026@0.25.1792.1026" timestamp="1631196582895" />
+    <state width="778" height="207" key="GridCell.Tab.0.center/0.25.1792.1027@0.25.1792.1027" timestamp="1631195548981" />
+    <state width="778" height="207" key="GridCell.Tab.0.left" timestamp="1631212085523">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
-    <state width="803" height="207" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920936" />
-    <state width="779" height="207" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979774" />
-    <state width="781" height="207" key="GridCell.Tab.0.left/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410661" />
-    <state width="894" height="268" key="GridCell.Tab.0.left/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427034" />
-    <state width="1189" height="268" key="GridCell.Tab.0.left/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364407" />
-    <state width="779" height="207" key="GridCell.Tab.0.right" timestamp="1631192979774">
+    <state width="778" height="207" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686569" />
+    <state width="778" height="207" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1631212085523" />
+    <state width="778" height="207" key="GridCell.Tab.0.left/0.25.1792.1024@0.25.1792.1024" timestamp="1631199020176" />
+    <state width="778" height="207" key="GridCell.Tab.0.left/0.25.1792.1026@0.25.1792.1026" timestamp="1631196582895" />
+    <state width="778" height="207" key="GridCell.Tab.0.left/0.25.1792.1027@0.25.1792.1027" timestamp="1631195548981" />
+    <state width="778" height="207" key="GridCell.Tab.0.right" timestamp="1631212085524">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
-    <state width="803" height="207" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920937" />
-    <state width="779" height="207" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979774" />
-    <state width="781" height="207" key="GridCell.Tab.0.right/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410662" />
-    <state width="894" height="268" key="GridCell.Tab.0.right/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427035" />
-    <state width="1189" height="268" key="GridCell.Tab.0.right/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364408" />
+    <state width="778" height="207" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686570" />
+    <state width="778" height="207" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1631212085524" />
+    <state width="778" height="207" key="GridCell.Tab.0.right/0.25.1792.1024@0.25.1792.1024" timestamp="1631199020177" />
+    <state width="778" height="207" key="GridCell.Tab.0.right/0.25.1792.1026@0.25.1792.1026" timestamp="1631196582895" />
+    <state width="778" height="207" key="GridCell.Tab.0.right/0.25.1792.1027@0.25.1792.1027" timestamp="1631195548982" />
     <state width="894" height="331" key="GridCell.Tab.1.bottom" timestamp="1631179633691">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
@@ -273,10 +309,11 @@
     </state>
     <state x="414" y="168" key="SettingsEditor/0.25.1792.1021@0.25.1792.1021" timestamp="1631184220283" />
     <state x="414" y="169" key="SettingsEditor/0.25.1792.1026@0.25.1792.1026" timestamp="1631161657410" />
-    <state x="269" y="259" key="Vcs.Push.Dialog.v2" timestamp="1631178069956">
-      <screen x="0" y="25" width="1792" height="1023" />
+    <state x="269" y="259" key="Vcs.Push.Dialog.v2" timestamp="1631193256449">
+      <screen x="0" y="25" width="1792" height="1024" />
     </state>
     <state x="269" y="259" key="Vcs.Push.Dialog.v2/0.25.1792.1023@0.25.1792.1023" timestamp="1631178069956" />
+    <state x="269" y="259" key="Vcs.Push.Dialog.v2/0.25.1792.1024@0.25.1792.1024" timestamp="1631193256449" />
     <state x="269" y="260" key="Vcs.Push.Dialog.v2/0.25.1792.1026@0.25.1792.1026" timestamp="1631163733459" />
     <state x="422" y="239" key="git4idea.branch.GitSmartOperationDialog" timestamp="1631187234380">
       <screen x="0" y="25" width="1792" height="1023" />
