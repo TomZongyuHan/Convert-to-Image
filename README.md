@@ -23,7 +23,15 @@ Convolutional neural networks (CNNs) are a class of deep learning architectures 
 
 ## Install
 ### Environment
-install environment
+1. Python install
+    - Please refer to [python website](https://www.python.org/)
+    - Note: Please use python3 for this project
+2. R install
+    - Please refer to [R website](https://www.r-project.org/)
+3. Dependencies install
+    - Open commond line, run following command:
+    `python3 installDependencies.py`
+
 ### Run
 how to run code
 

@@ -1,5 +1,6 @@
 # Import library and methods
 import numpy as np
+import pandas as pd
 from sklearn.decomposition import PCA
 
 
@@ -7,16 +8,21 @@ from sklearn.decomposition import PCA
 # Input:
 #   normalizedDataset: the variable store normalized dataset
 #   drName: the name of dimensionality reduction method
+#   returnMethod: boolean value,
+#       if need to return the dr method, use True
+#       if nedd to return processed dataset, use False
 # Output:
 #   drDataset: the variable of datasets after dimensionality reduce
-def dimensionalityReduce(normalizedDataset, drName):
+#   list of drMethod and normalizedDataset: if use returnMethod
+def dimensionalityReduce(normalizedDataset, drName, returnMethod):
     # Transpose the dataset for dimensionality reduction
-    normalizedDatasetT = np.transpose(normalizedDataset)
+    # normalizedDatasetT = np.transpose(normalizedDataset)
+    normalizedDatasetT = normalizedDataset.transpose()
 
     # Implement and run dimensionality reduction methods
     if drName == 'pca':
-        pca = PCA(n_components=0.95)
-        drDatasetT = pca.fit_transform(normalizedDatasetT)
+        drMethod = PCA(n_components=0.95)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT)
     elif drName == 'kpca':
         drDataset = 1
     elif drName == 'tsne':
@@ -24,12 +30,17 @@ def dimensionalityReduce(normalizedDataset, drName):
     elif drName == 'phate':
         drDataset = 1
     else:
-        print("Please enter a correct normalize name.")
+        print("????? Please enter a correct normalize name ?????")
 
     # Transpose the dataset for results
-    drDataset = np.transpose(drDatasetT)
+    # drDataset = np.transpose(drDatasetT)
+    drDataset = drDatasetT.transpose()
 
-    return drDataset
+    # Return the result
+    if returnMethod:
+        return [drMethod, normalizedDataset]
+    else:
+        return drDataset
 
 
 # # Test
