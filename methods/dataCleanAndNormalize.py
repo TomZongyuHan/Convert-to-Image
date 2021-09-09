@@ -18,12 +18,13 @@ import pandas as pd
 #   normalizedDataset: the variable store normalized dataset
 def dataCleanAndNormalize(filepath, isRowCount, normName):
     # Transform variable 'isRowCount' to String
-    if(isRowCount):
+    if (isRowCount):
         isRowCount = 'TRUE'
     else:
         isRowCount = 'FALSE'
 
     # Prepare R variable
+    filepathpy = filepath
     filepath = '\"' + filepath + '\"'
     isRowCount = '\"' + isRowCount + '\"'
     normName = '\"' + normName + '\"'
@@ -65,14 +66,6 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
                 rowdata <- rowdata[!grepl(name, rowdata[, 1]), ]
             }
         
-            # Save colume name and row name
-            cn <- rowdata[, 1]
-            rn <- rowdata[1, ]
-            rn_c <- ""
-            for (name in rn[-1]) {
-                rn_c <- c(rn_c, name)
-            }
-        
             # Discard first row and first column (row name, column name)
             rowdata <- rowdata[-1, -1]
         
@@ -99,10 +92,6 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
             } else if (normname == "seurat") {
                 rowdata <- as.matrix(NormalizeData(rowdata))
             } 
-        
-            # Add the rowname and colname of dataset
-            # rownames(rowdata) <- rn[-1]
-            colnames(rowdata) <- cn[-1]
 
             return(rowdata)
         }
@@ -115,13 +104,15 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     dataframe = robjects.reval("res")
     # normalized_dataset = np.array(dataframe)
     with localconverter(robjects.default_converter + pandas2ri.converter):
-        normalized_dataset = pd.DataFrame(data = robjects.conversion.rpy2py(dataframe))
+        normalized_dataset = pd.DataFrame(data=robjects.conversion.rpy2py(dataframe))
         normalized_dataset.columns = normalized_dataset.iloc[0]
         normalized_dataset.drop(normalized_dataset.index[0])
 
+    # Add columns name to dataframe
+    normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).index
+
     # Return processed dataset
     return normalized_dataset
-
 
 # Test
 # filepath = '../originalDatasets/' + 'yan-RowCount.csv'
