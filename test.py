@@ -1,5 +1,5 @@
+# Test for 1 pipeline
 # Import library and methods
-import sys
 from methods import dataCleanAndNormalize
 from methods import dimensionalityReduce
 from methods import imageConvert
@@ -8,24 +8,24 @@ from methods import CNNTrain
 from methods import calculateAccuracy
 
 
-# Main method include all pipeline
+# test method include 1 pipeline
 # Input:
 #   filename: string value, the name of csv file (include .csv)
 #       dataset file should be put in ./originalDatasets
-#   isRowCount: boolean value, 
+#   isRowCount: boolean value,
 #       if dataset is row count, use True
 #       if dataset is not row count, use False
 # Output:
 #   result files will be store in ./results
-def main(filename, isRowCount):
+def test(filename, isRowCount):
     # Set file path
     filepath = 'originalDatasets/' + filename
 
     # Set all methods name list
-    normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
-    drNames = ['pca', 'kpca', 'tsne', 'phate']
-    icNames = ['deepinsight', 'cpcr', 'gaf']
-    CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
+    normNames = ['linnorm']
+    drNames = ['pca']
+    icNames = ['deepinsight']
+    CNNNames = ['vgg16']
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
@@ -37,11 +37,11 @@ def main(filename, isRowCount):
             # Dimensionality reduce
             drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName)
             for icName in icNames:
-                imageDataset = imageConvert.imageConvert(drDataset, icName)  # Image convert
-                enhancedDataset = imageEnhance.imageEnhance(imageDataset)  # Image enhance
+                # imageDataset = imageConvert(drDataset, icName) # Image convert
+                # enhancedDataset = imageEnhance(imageDataset) # Image enhance
                 for CNNName in CNNNames:
-                    result = CNNTrain.CNNTrain(enhancedDataset, CNNName)  # CNN train
-                    calculateAccuracy.calculateAccuracy(result)  # Calculate accuracy
+                    # result = CNNTrain(enhancedDataset, CNNName) # CNN train
+                    # calculateAccuracy(result) # Calculate accuracy
                     finishNum += 1
                     print('----- ' +
                           normName + '-' +
@@ -50,7 +50,12 @@ def main(filename, isRowCount):
                           CNNName + ' finish ' +
                           str(finishNum) + '/' + str(allNum))
 
+    # Test return
+    return drDataset
 
-# main function entry
-if __name__ == '__main__':
-    main(sys.argv[0], sys.argv[1])
+
+# Run test
+filename = 'yan-RowCount.csv'
+testRes = test(filename, True)
+print("shape of drDataset: " + str(testRes.shape))
+print(testRes)
