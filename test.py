@@ -1,5 +1,6 @@
 # Test for the pipeline
 # Import library and methods
+
 from methods import dataCleanAndNormalize
 from methods import dimensionalityReduce
 from methods import imageConvert
@@ -58,5 +59,5 @@ def test(filename, isRowCount):
 # Run test
 filename = 'test-RowCount.csv'
 testRes = test(filename, True)
-print("shape of imageDataset: " + str(testRes.shape))
+# print("shape of imageDataset: " + str(testRes.shape))
 print(testRes)

@@ -113,7 +113,6 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
 
     # Return processed dataset
     return normalized_dataset
-
 # Test
 # filepath = '../originalDatasets/' + 'yan-RowCount.csv'
 # normalized_dataset = dataCleanAndNormalize(filepath, True, "linnorm")
