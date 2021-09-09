@@ -1,9 +1,10 @@
 # Import library and methods
 import sys
+
 from methods import dataCleanAndNormalize
 from methods import dimensionalityReduce
 from methods import imageConvert
-from methods import imageEnhance
+from methods import imageAugumentation
 from methods import CNNTrain
 from methods import calculateAccuracy
 
@@ -37,7 +38,7 @@ def main(filename, isRowCount):
             drDataset = dimensionalityReduce(normalizedDataset, drName)
             for icName in icNames:
                 imageDataset = imageConvert(drDataset, icName) # Image convert
-                enhancedDataset = imageEnhance(imageDataset) # Image enhance
+                enhancedDataset = imageAugumentation(imageDataset) # Image enhance
                 for CNNName in CNNNames:
                     result = CNNTrain(enhancedDataset, CNNName) # CNN train
                     calculateAccuracy(result) # Calculate accuracy
