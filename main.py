@@ -1,3 +1,4 @@
+# Main pipeline of the project
 # Import library and methods
 import sys
 from methods import dataCleanAndNormalize
@@ -50,7 +51,9 @@ def main(filename, isRowCount):
                           CNNName + ' finish ' +
                           str(finishNum) + '/' + str(allNum))
 
+    print('!!!!! All process of dataset: ' + filename + ' is completed, see results in /results !!!!!')
 
-# main function entry
+
+# Main function entry
 if __name__ == '__main__':
-    main(sys.argv[0], sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
