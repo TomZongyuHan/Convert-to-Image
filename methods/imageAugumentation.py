@@ -1,7 +1,6 @@
 # Import library and methods
 from PIL import Image, ImageEnhance
 import numpy as np
-from matplotlib import pyplot as plt
 
 # Enhance the image dataset
 # Input:
