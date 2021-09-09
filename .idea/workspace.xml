@@ -19,16 +19,15 @@
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/zhan9295" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:zhan9295" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d42445d6-8dbf-4375-b326-5d32893cc90f" name="Default Changelist" comment="data augmentation version 1&#10;- 20210909&#10;- Brooks Liu">
-      <change beforePath="$PROJECT_DIR$/methods/dataCleanAndNormalize.py" beforeDir="false" afterPath="$PROJECT_DIR$/methods/dataCleanAndNormalize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/methods/imageConvert.py" beforeDir="false" afterPath="$PROJECT_DIR$/methods/imageConvert.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/methods/imageAugumentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/methods/imageAugumentation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -138,8 +137,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.installDependencies" />
         <item itemvalue="Python.imageAugumentation" />
+        <item itemvalue="Python.installDependencies" />
         <item itemvalue="Python.imageAugumentation" />
         <item itemvalue="Python.test" />
       </list>
@@ -212,35 +211,35 @@
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
     <state x="746" y="291" key="FileChooserDialogImpl/0.25.1792.1021@0.25.1792.1021" timestamp="1631183962541" />
-    <state width="781" height="207" key="GridCell.Tab.0.bottom" timestamp="1631191718961">
+    <state width="779" height="207" key="GridCell.Tab.0.bottom" timestamp="1631192979775">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state width="803" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920937" />
-    <state width="781" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1631191718961" />
+    <state width="779" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979775" />
     <state width="781" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410663" />
     <state width="894" height="268" key="GridCell.Tab.0.bottom/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427036" />
     <state width="1189" height="268" key="GridCell.Tab.0.bottom/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364408" />
-    <state width="781" height="207" key="GridCell.Tab.0.center" timestamp="1631191718960">
+    <state width="779" height="207" key="GridCell.Tab.0.center" timestamp="1631192979774">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state width="803" height="207" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920936" />
-    <state width="781" height="207" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1631191718960" />
+    <state width="779" height="207" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979774" />
     <state width="781" height="207" key="GridCell.Tab.0.center/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410662" />
     <state width="894" height="268" key="GridCell.Tab.0.center/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427035" />
     <state width="1189" height="268" key="GridCell.Tab.0.center/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364407" />
-    <state width="781" height="207" key="GridCell.Tab.0.left" timestamp="1631191718960">
+    <state width="779" height="207" key="GridCell.Tab.0.left" timestamp="1631192979774">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state width="803" height="207" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920936" />
-    <state width="781" height="207" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1631191718960" />
+    <state width="779" height="207" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979774" />
     <state width="781" height="207" key="GridCell.Tab.0.left/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410661" />
     <state width="894" height="268" key="GridCell.Tab.0.left/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427034" />
     <state width="1189" height="268" key="GridCell.Tab.0.left/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364407" />
-    <state width="781" height="207" key="GridCell.Tab.0.right" timestamp="1631191718961">
+    <state width="779" height="207" key="GridCell.Tab.0.right" timestamp="1631192979774">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state width="803" height="207" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1631184920937" />
-    <state width="781" height="207" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1631191718961" />
+    <state width="779" height="207" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1631192979774" />
     <state width="781" height="207" key="GridCell.Tab.0.right/0.25.1792.1024@0.25.1792.1024" timestamp="1631191410662" />
     <state width="894" height="268" key="GridCell.Tab.0.right/0.25.1792.1026@0.25.1792.1026" timestamp="1631165427035" />
     <state width="1189" height="268" key="GridCell.Tab.0.right/0.25.1792.1027@0.25.1792.1027" timestamp="1631163364408" />

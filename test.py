@@ -4,7 +4,7 @@
 from methods import dataCleanAndNormalize
 from methods import dimensionalityReduce
 from methods import imageConvert
-from methods import imageEnhance
+# from methods import imageAugumentation
 from methods import CNNTrain
 from methods import calculateAccuracy
 

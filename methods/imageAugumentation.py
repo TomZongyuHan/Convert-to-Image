@@ -15,8 +15,7 @@ def imageAugumentation(imageDataset):
     augmentedDataset = []
     img = imageDataset[0]
     height, width, _ = img.shape
-    # op = np.random.randint(1, 6)
-    op = 3
+    op = np.random.randint(1, 6)
     # crop
     if(op == 1):
         img = crop(img, 1512, 2016)
