@@ -36,8 +36,8 @@ def imageAugumentation(imageDataset):
 
     augmentedTrainDataset = np.array(augmentedTrainDataset)
 
-    # left -> train dataset, right -> test dataset
-    augmentedDataset = [augmentedTrainDataset, newTestDataset]
+    # 0 -> x train dataset, 1 -> x test dataset, 2 -> y train dataset, 3 -> y test dataset
+    augmentedDataset = [augmentedTrainDataset, newTestDataset, imageDataset[2], imageDataset[3]]
     return augmentedDataset
 
 # Use random methods to enhance image data

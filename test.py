@@ -1,11 +1,13 @@
 # Test for the pipeline
 # Import library and methods
+import sys
+sys.path.append('./methods/')
+from dataCleanAndNormalize import dataCleanAndNormalize
+from dimensionalityReduce import dimensionalityReduce
+from imageConvert import imageConvert
 from imageAugumentation import imageAugumentation
-from methods import dataCleanAndNormalize
-from methods import dimensionalityReduce
-from methods import imageConvert
-from methods import CNNTrain
-from methods import calculateAccuracy
+from CNNTrain import CNNTrain
+from calculateAccuracy import calculateAccuracy
 
 
 # test methods included in the pipeline
@@ -32,13 +34,13 @@ def test(filename, isRowCount):
     allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames)  # calculate how many methods exist
     for normName in normNames:
         # Data clean and normalize
-        normalizedDataset = dataCleanAndNormalize.dataCleanAndNormalize(filepath, isRowCount, normName)
+        normalizedDataset = dataCleanAndNormalize(filepath, isRowCount, normName)
         for drName in drNames:
             # Dimensionality reduce
             # drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName, False)
-            drResult = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName, True)
+            drResult = dimensionalityReduce(normalizedDataset, drName, True)
             for icName in icNames:
-                imageDataset = imageConvert.imageConvert(drResult, icName) # Image convert
+                imageDataset = imageConvert(drResult, icName) # Image convert
                 enhancedDataset = imageAugumentation(imageDataset) # Image enhance
                 # for CNNName in CNNNames:
                 #     # result = CNNTrain(enhancedDataset, CNNName) # CNN train
