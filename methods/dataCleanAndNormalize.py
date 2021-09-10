@@ -1,4 +1,5 @@
 # Import library and methods
+from IPython.core.display import display
 from rpy2.robjects.packages import importr
 import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
@@ -105,8 +106,6 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     # normalized_dataset = np.array(dataframe)
     with localconverter(robjects.default_converter + pandas2ri.converter):
         normalized_dataset = pd.DataFrame(data=robjects.conversion.rpy2py(dataframe))
-        normalized_dataset.columns = normalized_dataset.iloc[0]
-        normalized_dataset.drop(normalized_dataset.index[0])
 
     # Add columns name to dataframe
     normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).index
@@ -114,6 +113,6 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     # Return processed dataset
     return normalized_dataset
 # Test
-# filepath = '../originalDatasets/' + 'yan-RowCount.csv'
+# filepath = '../originalDatasets/' + 'test-RowCount.csv'
 # normalized_dataset = dataCleanAndNormalize(filepath, True, "linnorm")
-# print(normalized_dataset)
+# display(normalized_dataset)
