@@ -1,9 +1,9 @@
 # Test for the pipeline
 # Import library and methods
+from imageAugumentation import imageAugumentation
 from methods import dataCleanAndNormalize
 from methods import dimensionalityReduce
 from methods import imageConvert
-from methods import imageEnhance
 from methods import CNNTrain
 from methods import calculateAccuracy
 
@@ -39,7 +39,7 @@ def test(filename, isRowCount):
             drResult = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName, True)
             for icName in icNames:
                 imageDataset = imageConvert.imageConvert(drResult, icName) # Image convert
-                # enhancedDataset = imageEnhance(imageDataset) # Image enhance
+                enhancedDataset = imageAugumentation(imageDataset) # Image enhance
                 # for CNNName in CNNNames:
                 #     # result = CNNTrain(enhancedDataset, CNNName) # CNN train
                 #     # calculateAccuracy(result) # Calculate accuracy
@@ -52,11 +52,10 @@ def test(filename, isRowCount):
                 #           str(finishNum) + '/' + str(allNum))
 
     # Test return
-    return imageDataset
-
+    return enhancedDataset
 
 # Run test
 filename = 'test-RowCount.csv'
 testRes = test(filename, True)
-print("shape of imageDataset: " + str(testRes.shape))
-print(testRes)
+# print("shape of imageDataset: " + str(testRes.shape))
+print(testRes[0].shape)

@@ -1,0 +1,48 @@
+Index: test.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Test for 1 pipeline\n# Import library and methods\nfrom methods import dataCleanAndNormalize\nfrom methods import dimensionalityReduce\nfrom methods import imageConvert\nfrom methods import imageEnhance\nfrom methods import CNNTrain\nfrom methods import calculateAccuracy\n\n\n# test method include 1 pipeline\n# Input:\n#   filename: string value, the name of csv file (include .csv)\n#       dataset file should be put in ./originalDatasets\n#   isRowCount: boolean value,\n#       if dataset is row count, use True\n#       if dataset is not row count, use False\n# Output:\n#   result files will be store in ./results\ndef test(filename, isRowCount):\n    # Set file path\n    filepath = 'originalDatasets/' + filename\n\n    # Set all methods name list\n    normNames = ['linnorm']\n    drNames = ['pca']\n    icNames = ['deepinsight']\n    CNNNames = ['vgg16']\n\n    # Run all methods and output results\n    finishNum = 0  # use a number to calculate how many method have finished\n    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames)  # calculate how many methods exist\n    for normName in normNames:\n        # Data clean and normalize\n        normalizedDataset = dataCleanAndNormalize.dataCleanAndNormalize(filepath, isRowCount, normName)\n        for drName in drNames:\n            # Dimensionality reduce\n            drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName)\n            for icName in icNames:\n                # imageDataset = imageConvert(drDataset, icName) # Image convert\n                # enhancedDataset = imageEnhance(imageDataset) # Image enhance\n                for CNNName in CNNNames:\n                    # result = CNNTrain(enhancedDataset, CNNName) # CNN train\n                    # calculateAccuracy(result) # Calculate accuracy\n                    finishNum += 1\n                    print('----- ' +\n                          normName + '-' +\n                          drName + '-' +\n                          icName + '-' +\n                          CNNName + ' finish ' +\n                          str(finishNum) + '/' + str(allNum))\n\n    # Test return\n    return drDataset\n\n\n# Run test\nfilename = 'yan-RowCount.csv'\ntestRes = test(filename, True)\nprint(\"shape of drDataset: \" + str(testRes.shape))\nprint(testRes)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test.py	(revision 493adfda65818cc7b449de9a959675da74fccb61)
++++ test.py	(date 1631187195094)
+@@ -33,25 +33,25 @@
+     for normName in normNames:
+         # Data clean and normalize
+         normalizedDataset = dataCleanAndNormalize.dataCleanAndNormalize(filepath, isRowCount, normName)
+-        for drName in drNames:
+-            # Dimensionality reduce
+-            drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName)
+-            for icName in icNames:
++        # for drName in drNames:
++        #     # Dimensionality reduce
++        #     drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName)
++        #     for icName in icNames:
+                 # imageDataset = imageConvert(drDataset, icName) # Image convert
+                 # enhancedDataset = imageEnhance(imageDataset) # Image enhance
+-                for CNNName in CNNNames:
++                # for CNNName in CNNNames:
+                     # result = CNNTrain(enhancedDataset, CNNName) # CNN train
+                     # calculateAccuracy(result) # Calculate accuracy
+-                    finishNum += 1
+-                    print('----- ' +
+-                          normName + '-' +
+-                          drName + '-' +
+-                          icName + '-' +
+-                          CNNName + ' finish ' +
+-                          str(finishNum) + '/' + str(allNum))
++                    # finishNum += 1
++                    # print('----- ' +
++                    #       normName + '-' +
++                    #       drName + '-' +
++                    #       icName + '-' +
++                    #       CNNName + ' finish ' +
++                    #       str(finishNum) + '/' + str(allNum))
+ 
+     # Test return
+-    return drDataset
++    return normalizedDataset
+ 
+ 
+ # Run test
