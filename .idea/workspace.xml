@@ -25,7 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d42445d6-8dbf-4375-b326-5d32893cc90f" name="Default Changelist" comment="image augumentation version 3.0(delete useless package)&#10;- 20210910&#10;- Brooks Liu">
+    <list default="true" id="d42445d6-8dbf-4375-b326-5d32893cc90f" name="Default Changelist" comment="image augumentation version 4.0(add umatplotlib package to show the image)&#10;- 20210910&#10;- Brooks Liu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/methods/imageAugumentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/methods/imageAugumentation.py" afterDir="false" />
     </list>
@@ -211,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631212415254</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="image augumentation version 4.0(add umatplotlib package to show the image)&#10;- 20210910&#10;- Brooks Liu">
+      <created>1631251384382</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1631251384382</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -244,7 +251,8 @@
     <MESSAGE value="merge image-converting part with imageAugumentation part&#10;- 20210909&#10;- Brooks Liu" />
     <MESSAGE value="image augumentation version 2.0&#10;- 20210910&#10;- Brooks Liu" />
     <MESSAGE value="image augumentation version 3.0(delete useless package)&#10;- 20210910&#10;- Brooks Liu" />
-    <option name="LAST_COMMIT_MESSAGE" value="image augumentation version 3.0(delete useless package)&#10;- 20210910&#10;- Brooks Liu" />
+    <MESSAGE value="image augumentation version 4.0(add umatplotlib package to show the image)&#10;- 20210910&#10;- Brooks Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="image augumentation version 4.0(add umatplotlib package to show the image)&#10;- 20210910&#10;- Brooks Liu" />
   </component>
   <component name="WindowStateProjectService">
     <state x="369" y="192" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1631161993170">
@@ -260,37 +268,37 @@
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
     <state x="746" y="291" key="FileChooserDialogImpl/0.25.1792.1021@0.25.1792.1021" timestamp="1631183962541" />
-    <state width="649" height="131" key="GridCell.Tab.0.bottom" timestamp="1631251306780">
-      <screen x="0" y="25" width="1792" height="1026" />
+    <state width="648" height="131" key="GridCell.Tab.0.bottom" timestamp="1631251700132">
+      <screen x="0" y="25" width="1792" height="1024" />
     </state>
     <state width="778" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686570" />
     <state width="777" height="207" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1631212428809" />
-    <state width="649" height="131" key="GridCell.Tab.0.bottom/0.25.1792.1024@0.25.1792.1024" timestamp="1631250680186" />
-    <state width="649" height="131" key="GridCell.Tab.0.bottom/0.25.1792.1026@0.25.1792.1026" timestamp="1631251306780" />
+    <state width="648" height="131" key="GridCell.Tab.0.bottom/0.25.1792.1024@0.25.1792.1024" timestamp="1631251700132" />
+    <state width="649" height="131" key="GridCell.Tab.0.bottom/0.25.1792.1026@0.25.1792.1026" timestamp="1631251387758" />
     <state width="649" height="131" key="GridCell.Tab.0.bottom/0.25.1792.1027@0.25.1792.1027" timestamp="1631250233303" />
-    <state width="649" height="131" key="GridCell.Tab.0.center" timestamp="1631251306779">
-      <screen x="0" y="25" width="1792" height="1026" />
+    <state width="648" height="131" key="GridCell.Tab.0.center" timestamp="1631251700131">
+      <screen x="0" y="25" width="1792" height="1024" />
     </state>
     <state width="778" height="207" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686569" />
     <state width="777" height="207" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1631212428808" />
-    <state width="649" height="131" key="GridCell.Tab.0.center/0.25.1792.1024@0.25.1792.1024" timestamp="1631250680185" />
-    <state width="649" height="131" key="GridCell.Tab.0.center/0.25.1792.1026@0.25.1792.1026" timestamp="1631251306779" />
+    <state width="648" height="131" key="GridCell.Tab.0.center/0.25.1792.1024@0.25.1792.1024" timestamp="1631251700131" />
+    <state width="649" height="131" key="GridCell.Tab.0.center/0.25.1792.1026@0.25.1792.1026" timestamp="1631251387757" />
     <state width="649" height="131" key="GridCell.Tab.0.center/0.25.1792.1027@0.25.1792.1027" timestamp="1631250233302" />
-    <state width="649" height="131" key="GridCell.Tab.0.left" timestamp="1631251306779">
-      <screen x="0" y="25" width="1792" height="1026" />
+    <state width="648" height="131" key="GridCell.Tab.0.left" timestamp="1631251700131">
+      <screen x="0" y="25" width="1792" height="1024" />
     </state>
     <state width="778" height="207" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686569" />
     <state width="777" height="207" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1631212428808" />
-    <state width="649" height="131" key="GridCell.Tab.0.left/0.25.1792.1024@0.25.1792.1024" timestamp="1631250680185" />
-    <state width="649" height="131" key="GridCell.Tab.0.left/0.25.1792.1026@0.25.1792.1026" timestamp="1631251306779" />
+    <state width="648" height="131" key="GridCell.Tab.0.left/0.25.1792.1024@0.25.1792.1024" timestamp="1631251700131" />
+    <state width="649" height="131" key="GridCell.Tab.0.left/0.25.1792.1026@0.25.1792.1026" timestamp="1631251387757" />
     <state width="649" height="131" key="GridCell.Tab.0.left/0.25.1792.1027@0.25.1792.1027" timestamp="1631250233301" />
-    <state width="649" height="131" key="GridCell.Tab.0.right" timestamp="1631251306779">
-      <screen x="0" y="25" width="1792" height="1026" />
+    <state width="648" height="131" key="GridCell.Tab.0.right" timestamp="1631251700131">
+      <screen x="0" y="25" width="1792" height="1024" />
     </state>
     <state width="778" height="207" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1631209686570" />
     <state width="777" height="207" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1631212428808" />
-    <state width="649" height="131" key="GridCell.Tab.0.right/0.25.1792.1024@0.25.1792.1024" timestamp="1631250680186" />
-    <state width="649" height="131" key="GridCell.Tab.0.right/0.25.1792.1026@0.25.1792.1026" timestamp="1631251306779" />
+    <state width="648" height="131" key="GridCell.Tab.0.right/0.25.1792.1024@0.25.1792.1024" timestamp="1631251700131" />
+    <state width="649" height="131" key="GridCell.Tab.0.right/0.25.1792.1026@0.25.1792.1026" timestamp="1631251387758" />
     <state width="649" height="131" key="GridCell.Tab.0.right/0.25.1792.1027@0.25.1792.1027" timestamp="1631250233302" />
     <state width="894" height="331" key="GridCell.Tab.1.bottom" timestamp="1631179633691">
       <screen x="0" y="25" width="1792" height="1021" />
@@ -322,12 +330,12 @@
     </state>
     <state x="414" y="168" key="SettingsEditor/0.25.1792.1021@0.25.1792.1021" timestamp="1631184220283" />
     <state x="414" y="169" key="SettingsEditor/0.25.1792.1026@0.25.1792.1026" timestamp="1631161657410" />
-    <state x="269" y="259" key="Vcs.Push.Dialog.v2" timestamp="1631212436572">
-      <screen x="0" y="25" width="1792" height="1023" />
+    <state x="269" y="260" key="Vcs.Push.Dialog.v2" timestamp="1631251393164">
+      <screen x="0" y="25" width="1792" height="1026" />
     </state>
     <state x="269" y="259" key="Vcs.Push.Dialog.v2/0.25.1792.1023@0.25.1792.1023" timestamp="1631212436572" />
     <state x="269" y="259" key="Vcs.Push.Dialog.v2/0.25.1792.1024@0.25.1792.1024" timestamp="1631193256449" />
-    <state x="269" y="260" key="Vcs.Push.Dialog.v2/0.25.1792.1026@0.25.1792.1026" timestamp="1631163733459" />
+    <state x="269" y="260" key="Vcs.Push.Dialog.v2/0.25.1792.1026@0.25.1792.1026" timestamp="1631251393164" />
     <state x="422" y="239" key="git4idea.branch.GitSmartOperationDialog" timestamp="1631187234380">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>

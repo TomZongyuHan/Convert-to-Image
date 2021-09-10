@@ -47,8 +47,7 @@ def imageAugumentation(imageDataset):
 #   npImage: augmented data -> (50, 50)
 def random_aug(npImage):
     # generate a random int
-    # op = np.random.randint(1, 5)
-    op = 4
+    op = np.random.randint(1, 5)
     # crop
     if (op == 1):
         npImage = crop(npImage, 40, 40)
@@ -122,7 +121,7 @@ def random_flip(npImage):
 #   var: The variance
 # Output:
 #   out: augmented data -> (50, 50)
-def gasuss_noise(npImage, mean=0, var=0.005):
+def gasuss_noise(npImage, mean = 0, var = 0.005):
     # nomorlized the pixel value
     npImage = np.array(npImage / 255, dtype=float)
     # create a gasuss matrix
@@ -147,6 +146,6 @@ def adjust_contrast(npImage):
 # Test
 # imageDataset = np.load("../final_test.npy", allow_pickle=True)
 # augmented_dataset = imageAugumentation(imageDataset)
-# # # print(augmented_dataset[0].shape)
+# print(augmented_dataset[0].shape)
 # plt.imshow(augmented_dataset[0][88])
 # plt.show()
