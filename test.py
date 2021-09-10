@@ -70,6 +70,6 @@ testRes = test(filename, True)
 # print(testRes[1].shape)
 # print(testRes[2].shape)
 # print(testRes[3].shape)
-# np.save("test.csv", testRes)
+np.save("test_Bruce", testRes)
 # for i in range(len(testRes[0])):
 #     print(testRes[0][i].shape)

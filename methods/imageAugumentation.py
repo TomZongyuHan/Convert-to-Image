@@ -14,19 +14,14 @@ def imageAugumentation(imageDataset):
     # Implement and run image enhance method
     # create two lists to store new img data
     newXTrainDataset = []
-    newXTestDataset = []
+    newXTestDataset = imageDataset[1]
     newYTrainDataset = imageDataset[2].tolist()
     newYTestDataset = imageDataset[3]
 
     for img in imageDataset[0]:
         # 3d img -> 2d img
-        img = img[:, :, 0]
+        # img = img[:, :, 0]
         newXTrainDataset.append(img)
-    for img in imageDataset[1]:
-        img = img[:, :, 0]
-        newXTestDataset.append(img)
-
-    newXTestDataset = np.array(newXTestDataset)
 
     augmentedXTrainDataset = newXTrainDataset
     for i in range(len(newXTrainDataset)):
@@ -35,10 +30,12 @@ def imageAugumentation(imageDataset):
         augmentedXTrainDataset.append(new_train_img)
         newYTrainDataset.append(newYTrainDataset[i])
 
-    augmentedTrainDataset = np.array(augmentedXTrainDataset)
     newYTrainDataset = np.array(newYTrainDataset)
+
+    augmentedXTrainDataset = np.array(augmentedXTrainDataset)
+
     # 0 -> x train dataset, 1 -> x test dataset, 2 -> y train dataset, 3 -> y test dataset
-    augmentedDataset = [augmentedTrainDataset, newXTestDataset, newYTrainDataset , newYTestDataset]
+    augmentedDataset = [augmentedXTrainDataset, newXTestDataset, newYTrainDataset , newYTestDataset]
     return augmentedDataset
 
 # Use random methods to enhance image data
@@ -79,7 +76,7 @@ def random_aug(npImage):
 #   npImage: augmented data -> (50, 50)
 def crop(npImage, height_range, width_range):
     npImage = np.array(npImage)
-    height, width = npImage.shape
+    height, width, _ = npImage.shape
     new_height = np.random.randint(0, height - height_range)
     new_width = np.random.randint(0, width - width_range)
     npImage = npImage[new_height: new_height + height_range, new_width: new_width + width_range]
@@ -95,7 +92,7 @@ def crop(npImage, height_range, width_range):
 # Output:
 #   npImage: augmented data -> (50, 50)
 def zoom(npImage, height_range, width_range, magnification):
-    height, width = npImage.shape
+    height, width, _ = npImage.shape
     # npImage = cv2.resize(npImage, (int(height * 1.5), int(width * 1.5)))
     npImage = npImage[int((height - height_range) / magnification): int((height + height_range) / magnification),
               int((width - width_range) / magnification): int((width + width_range) / magnification)]
@@ -151,16 +148,5 @@ def adjust_contrast(npImage):
 # Test
 # imageDataset = np.load("../test.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
-# print(type(imageDataset[2]))
 # augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0][120].shape)
-# for i in range(len(augmented_dataset[0])):
-#     print(augmented_dataset[0][i].shape)
-# print(augmented_dataset[1].shape)
-# print(augmented_dataset[2].shape)
-# print(augmented_dataset[3].shape)
-#
-# print(augmented_dataset[2][0])
-# print(augmented_dataset[2][72])
-# plt.imshow(augmented_dataset[0][133])
-# plt.show()
+# print(augmented_dataset[0].shape)
