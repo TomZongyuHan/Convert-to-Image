@@ -16,6 +16,8 @@ from scipy.spatial import ConvexHull
 #   imageDataset: the list of image datasets
 #       imageDataset[0] is X train data
 #       imageDataset[1] is X test data
+#       imageDataset[2] is y train data
+#       imageDataset[3] is y test data
 def imageConvert(drResult, icName):
     if isinstance(drResult, list):
         drMethod = drResult[0]
@@ -28,8 +30,6 @@ def imageConvert(drResult, icName):
         # Divide the dataset
         x = dataset.values.transpose()
         y = dataset.columns.values
-        print(x.shape)
-        print(y.shape)
         X_train, X_test, y_train, y_test = train_test_split(
             x, y, test_size=0.2, random_state=23, stratify=y)
 
@@ -47,10 +47,9 @@ def imageConvert(drResult, icName):
         # X_train_img = it.fit_transform(X_train_norm)
 
         # Train and get image data
-        print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
         X_train_img = it.fit_transform(X_train_norm)
         X_test_img = it.transform(X_test_norm)
-        imageDataset = [X_train_img, X_test_img]
+        imageDataset = [X_train_img, X_test_img, y_train, y_test]
     elif icName == 'cpcr':
         imageDataset = 1
     elif icName == 'gaf':
