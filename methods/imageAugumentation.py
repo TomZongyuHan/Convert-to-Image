@@ -1,4 +1,5 @@
 # Import library and methods
+import cv2
 from PIL import Image, ImageEnhance
 import numpy as np
 from matplotlib import pyplot as plt
@@ -12,32 +13,32 @@ from matplotlib import pyplot as plt
 def imageAugumentation(imageDataset):
     # Implement and run image enhance method
     # create two lists to store new img data
-    newTrainDataset = []
-    newTestDataset = []
+    newXTrainDataset = []
+    newXTestDataset = []
+    newYTrainDataset = imageDataset[2].tolist()
+    newYTestDataset = imageDataset[3]
+
     for img in imageDataset[0]:
         # 3d img -> 2d img
         img = img[:, :, 0]
-        newTrainDataset.append(img)
+        newXTrainDataset.append(img)
     for img in imageDataset[1]:
         img = img[:, :, 0]
-        newTestDataset.append(img)
+        newXTestDataset.append(img)
 
-    newTrainDataset = newTrainDataset
-    newTestDataset = np.array(newTestDataset)
+    newXTestDataset = np.array(newXTestDataset)
 
-    augmentedTrainDataset = newTrainDataset
-    count = 1
-    for i in range(len(newTrainDataset)):
+    augmentedXTrainDataset = newXTrainDataset
+    for i in range(len(newXTrainDataset)):
         # apply random_aug method to enhance the datasets
-        new_train_img = random_aug(newTrainDataset[i])
-        augmentedTrainDataset.append(new_train_img)
-        print("finish: " + str(count))
-        count = count + 1
+        new_train_img = random_aug(newXTrainDataset[i])
+        augmentedXTrainDataset.append(new_train_img)
+        newYTrainDataset.append(newYTrainDataset[i])
 
-    augmentedTrainDataset = np.array(augmentedTrainDataset)
-
+    augmentedTrainDataset = np.array(augmentedXTrainDataset)
+    newYTrainDataset = np.array(newYTrainDataset)
     # 0 -> x train dataset, 1 -> x test dataset, 2 -> y train dataset, 3 -> y test dataset
-    augmentedDataset = [augmentedTrainDataset, newTestDataset, imageDataset[2], imageDataset[3]]
+    augmentedDataset = [augmentedTrainDataset, newXTestDataset, newYTrainDataset , newYTestDataset]
     return augmentedDataset
 
 # Use random methods to enhance image data
@@ -64,6 +65,9 @@ def random_aug(npImage):
     if (op == 5):
         npImage = adjust_contrast(npImage)
 
+    npImage = cv2.resize(npImage, dsize=(50, 50), interpolation=cv2.INTER_CUBIC)
+    npImage = np.array(npImage)
+
     return npImage
 
 # Crop the picture
@@ -79,6 +83,7 @@ def crop(npImage, height_range, width_range):
     new_height = np.random.randint(0, height - height_range)
     new_width = np.random.randint(0, width - width_range)
     npImage = npImage[new_height: new_height + height_range, new_width: new_width + width_range]
+
     return npImage
 
 # Use zoom operation on the image
@@ -144,8 +149,18 @@ def adjust_contrast(npImage):
     return npImage
 
 # Test
-# imageDataset = np.load("../final_test.npy", allow_pickle=True)
+# imageDataset = np.load("../test.npy", allow_pickle=True)
+# ([x train], [x test], [y train], [y test])
+# print(type(imageDataset[2]))
 # augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0].shape)
-# plt.imshow(augmented_dataset[0][88])
+# print(augmented_dataset[0][120].shape)
+# for i in range(len(augmented_dataset[0])):
+#     print(augmented_dataset[0][i].shape)
+# print(augmented_dataset[1].shape)
+# print(augmented_dataset[2].shape)
+# print(augmented_dataset[3].shape)
+#
+# print(augmented_dataset[2][0])
+# print(augmented_dataset[2][72])
+# plt.imshow(augmented_dataset[0][133])
 # plt.show()
