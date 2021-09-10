@@ -13,6 +13,7 @@ from methods.dataCleanAndNormalize import dataCleanAndNormalize
 from methods.dimensionalityReduce import dimensionalityReduce
 from methods.imageAugumentation import imageAugumentation
 from methods.imageConvert import imageConvert
+import numpy as np
 
 # test methods included in the pipeline
 # Input:
@@ -65,7 +66,10 @@ def test(filename, isRowCount):
 filename = 'test-RowCount.csv'
 testRes = test(filename, True)
 # print("shape of imageDataset: " + str(testRes.shape))
-print(testRes[0].shape)
-print(testRes[1].shape)
-print(testRes[2].shape)
-print(testRes[3].shape)
+# print(testRes[0].shape)
+# print(testRes[1].shape)
+# print(testRes[2].shape)
+# print(testRes[3].shape)
+# np.save("test.csv", testRes)
+# for i in range(len(testRes[0])):
+#     print(testRes[0][i].shape)

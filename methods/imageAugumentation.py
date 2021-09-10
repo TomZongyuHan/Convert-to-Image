@@ -1,4 +1,5 @@
 # Import library and methods
+import cv2
 from PIL import Image, ImageEnhance
 import numpy as np
 from matplotlib import pyplot as plt
@@ -64,6 +65,9 @@ def random_aug(npImage):
     if (op == 5):
         npImage = adjust_contrast(npImage)
 
+    npImage = cv2.resize(npImage, dsize=(50, 50), interpolation=cv2.INTER_CUBIC)
+    npImage = np.array(npImage)
+
     return npImage
 
 # Crop the picture
@@ -79,6 +83,7 @@ def crop(npImage, height_range, width_range):
     new_height = np.random.randint(0, height - height_range)
     new_width = np.random.randint(0, width - width_range)
     npImage = npImage[new_height: new_height + height_range, new_width: new_width + width_range]
+
     return npImage
 
 # Use zoom operation on the image
@@ -148,12 +153,14 @@ def adjust_contrast(npImage):
 # ([x train], [x test], [y train], [y test])
 # print(type(imageDataset[2]))
 # augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0].shape)
+# print(augmented_dataset[0][120].shape)
+# for i in range(len(augmented_dataset[0])):
+#     print(augmented_dataset[0][i].shape)
 # print(augmented_dataset[1].shape)
 # print(augmented_dataset[2].shape)
 # print(augmented_dataset[3].shape)
 #
 # print(augmented_dataset[2][0])
 # print(augmented_dataset[2][72])
-# plt.imshow(augmented_dataset[0][88])
+# plt.imshow(augmented_dataset[0][133])
 # plt.show()
