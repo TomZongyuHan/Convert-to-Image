@@ -1,14 +1,18 @@
 # Test for the pipeline
 # Import library and methods
 import sys
-sys.path.append('./methods/')
-from dataCleanAndNormalize import dataCleanAndNormalize
-from dimensionalityReduce import dimensionalityReduce
-from imageConvert import imageConvert
-from imageAugumentation import imageAugumentation
-from CNNTrain import CNNTrain
-from calculateAccuracy import calculateAccuracy
+# sys.path.append('./methods/')
+# from dataCleanAndNormalize import dataCleanAndNormalize
+# from dimensionalityReduce import dimensionalityReduce
+# from imageConvert import imageConvert
+# from imageAugumentation import imageAugumentation
+# from CNNTrain import CNNTrain
+# from calculateAccuracy import calculateAccuracy
 
+from methods.dataCleanAndNormalize import dataCleanAndNormalize
+from methods.dimensionalityReduce import dimensionalityReduce
+from methods.imageAugumentation import imageAugumentation
+from methods.imageConvert import imageConvert
 
 # test methods included in the pipeline
 # Input:
@@ -19,6 +23,7 @@ from calculateAccuracy import calculateAccuracy
 #       if dataset is not row count, use False
 # Output:
 #   result files will be showed in commond line
+
 def test(filename, isRowCount):
     # Set file path
     filepath = 'originalDatasets/' + filename
@@ -61,3 +66,6 @@ filename = 'test-RowCount.csv'
 testRes = test(filename, True)
 # print("shape of imageDataset: " + str(testRes.shape))
 print(testRes[0].shape)
+print(testRes[1].shape)
+print(testRes[2].shape)
+print(testRes[3].shape)
