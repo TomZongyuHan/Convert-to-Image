@@ -1,12 +1,14 @@
 # Import library and methods
 from PIL import Image, ImageEnhance
 import numpy as np
+from matplotlib import pyplot as plt
 
 # Enhance the image dataset
 # Input:
 #   imageDataset: the variable of datasets after dimensionality reduce
 # Output:
 #   augmentedDataset: the list of test set and train set
+
 def imageAugumentation(imageDataset):
     # Implement and run image enhance method
     # create two lists to store new img data
@@ -45,7 +47,8 @@ def imageAugumentation(imageDataset):
 #   npImage: augmented data -> (50, 50)
 def random_aug(npImage):
     # generate a random int
-    op = np.random.randint(1, 5)
+    # op = np.random.randint(1, 5)
+    op = 4
     # crop
     if (op == 1):
         npImage = crop(npImage, 40, 40)
@@ -144,6 +147,6 @@ def adjust_contrast(npImage):
 # Test
 # imageDataset = np.load("../final_test.npy", allow_pickle=True)
 # augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0].shape)
+# # # print(augmented_dataset[0].shape)
 # plt.imshow(augmented_dataset[0][88])
 # plt.show()
