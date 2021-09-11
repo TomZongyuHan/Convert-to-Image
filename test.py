@@ -1,6 +1,7 @@
 # Test for the pipeline
 # Import library and methods
 import sys
+
 sys.path.append('./methods/')
 from dataCleanAndNormalize import dataCleanAndNormalize
 from dimensionalityReduce import dimensionalityReduce
@@ -28,42 +29,38 @@ def test(filename, isRowCount):
     drNames = ['pca']
     icNames = ['deepinsight']
     CNNNames = ['vgg16']
+    accNames = ['acc']
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
     allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames)  # calculate how many methods exist
     for normName in normNames:
         # Data clean and normalize
+        print("Normalizing......")
         normalizedDataset = dataCleanAndNormalize(filepath, isRowCount, normName)
         for drName in drNames:
+            print("Dimension Reducing......")
             # Dimensionality reduce
-            # drDataset = dimensionalityReduce.dimensionalityReduce(normalizedDataset, drName, False)
             drResult = dimensionalityReduce(normalizedDataset, drName, True)
             for icName in icNames:
-                imageDataset = imageConvert(drResult, icName) # Image convert
-                augmentedDataset = imageAugumentation(imageDataset) # Image enhance
+                print("Non-image to image......")
+                imageDataset = imageConvert(drResult, icName)  # Image convert
+                augmentedDataset = imageAugumentation(imageDataset)  # Image Augmentation
                 for CNNName in CNNNames:
-                    results = CNNTrain(augmentedDataset, CNNName) # CNN train
-                    # calculateAccuracy(result) # Calculate accuracy
-                    finishNum += 1
-                    print('----- ' +
-                          normName + '-' +
-                          drName + '-' +
-                          icName + '-' +
-                          CNNName + ' finish ' +
-                          str(finishNum) + '/' + str(allNum))
+                    print("Training......")
+                    results = CNNTrain(augmentedDataset, CNNName)  # CNN train
+                    for accName in accNames:
+                        accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
+                        print("Accuracy: " + str(accuracy))
+                        finishNum += 1
+                        print('----- ' +
+                              normName + '-' +
+                              drName + '-' +
+                              icName + '-' +
+                              CNNName + ' finish ' +
+                              str(finishNum) + '/' + str(allNum))
 
-    # Test return
-    return results
 
 # Run test
 filename = 'test-RowCount.csv'
-testRes = test(filename, True)
-# print("shape of imageDataset: " + str(testRes.shape))
-# print(testRes[0].shape)
-# print(testRes[1].shape)
-# print(testRes[2].shape)
-# print(testRes[3].shape)
-# np.save("test_Bruce", testRes)
-# for i in range(len(testRes[0])):
-#     print(testRes[0][i].shape)
+test(filename, True)

@@ -7,10 +7,9 @@ from sklearn.metrics import accuracy_score
 #   result: the variable of CNN train result
 # Output:
 #   result files will be store in ./results
-def calculateAccuracy(result, method = "acc"):
+def calculateAccuracy(result, method):
     # Implement and run calculate accuracy method
     if method == "acc":
         test_acc_score = accuracy_score(result[2], result[3])
-        print(test_acc_score)
-    
-    return test_acc_score
+
+    return str(test_acc_score)
