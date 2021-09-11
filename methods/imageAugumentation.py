@@ -2,7 +2,6 @@
 import cv2
 from PIL import Image, ImageEnhance
 import numpy as np
-from matplotlib import pyplot as plt
 
 # Enhance the image dataset
 # Input:
@@ -149,5 +148,3 @@ def adjust_contrast(npImage):
 # imageDataset = np.load("../test.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
 # augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0].shape)
-#test commit account 2
