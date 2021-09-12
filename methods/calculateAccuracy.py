@@ -1,13 +1,15 @@
 # Import library and methods
-
+import numpy as np
+from sklearn.metrics import accuracy_score
 
 # Calculate the accuracy of CNN training result
 # Input:
 #   result: the variable of CNN train result
 # Output:
 #   result files will be store in ./results
-def calculateAccuracy(result):
+def calculateAccuracy(result, method):
     # Implement and run calculate accuracy method
-    
-    
-    return 1
+    if method == "acc":
+        test_acc_score = accuracy_score(result[2], result[3])
+
+    return str(test_acc_score)
