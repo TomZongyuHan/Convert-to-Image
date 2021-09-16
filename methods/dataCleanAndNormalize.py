@@ -1,5 +1,4 @@
 # Import library and methods
-from IPython.core.display import display
 from rpy2.robjects.packages import importr
 import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
@@ -18,6 +17,7 @@ import pandas as pd
 # Output:
 #   normalizedDataset: the variable store normalized dataset
 def dataCleanAndNormalize(filepath, isRowCount, normName):
+    print("Normalizing......")
     # Transform variable 'isRowCount' to String
     if (isRowCount):
         isRowCount = 'TRUE'

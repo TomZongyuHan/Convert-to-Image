@@ -11,5 +11,4 @@ def calculateAccuracy(result, method):
     # Implement and run calculate accuracy method
     if method == "acc":
         test_acc_score = accuracy_score(result[2], result[3])
-
-    return str(test_acc_score)
+        print("Accuracy: " + str(test_acc_score))

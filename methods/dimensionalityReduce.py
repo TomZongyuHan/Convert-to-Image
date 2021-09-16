@@ -15,6 +15,7 @@ from sklearn.decomposition import PCA
 #   drDataset: the variable of datasets after dimensionality reduce
 #   list of drMethod and normalizedDataset: if use returnMethod
 def dimensionalityReduce(normalizedDataset, drName, returnMethod):
+    print("Dimension Reducing......")
     # Transpose the dataset for dimensionality reduction
     # normalizedDatasetT = np.transpose(normalizedDataset)
     normalizedDatasetT = normalizedDataset.transpose()
@@ -23,6 +24,7 @@ def dimensionalityReduce(normalizedDataset, drName, returnMethod):
     if drName == 'pca':
         drMethod = PCA(n_components=0.95)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT)
+        labels = normalizedDataset.columns.values
     elif drName == 'kpca':
         drDataset = 1
     elif drName == 'tsne':
@@ -40,7 +42,7 @@ def dimensionalityReduce(normalizedDataset, drName, returnMethod):
     if returnMethod:
         return [drMethod, normalizedDataset]
     else:
-        return drDataset
+        return [drDataset, labels]
 
 
 # # Test

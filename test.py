@@ -1,7 +1,6 @@
 # Test for the pipeline
 # Import library and methods
 import sys
-
 sys.path.append('./methods/')
 from dataCleanAndNormalize import dataCleanAndNormalize
 from dimensionalityReduce import dimensionalityReduce
@@ -27,31 +26,31 @@ def test(filename, isRowCount):
     # Set all methods need to be test
     normNames = ['linnorm']
     drNames = ['pca']
-    icNames = ['deepinsight']
+    icNames = ['gaf']
     CNNNames = ['vgg16']
     accNames = ['acc']
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
-    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames)  # calculate how many methods exist
+    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames) * len(accNames)  # calculate how many methods exist
     for normName in normNames:
         # Data clean and normalize
-        print("Normalizing......")
         normalizedDataset = dataCleanAndNormalize(filepath, isRowCount, normName)
         for drName in drNames:
-            print("Dimension Reducing......")
             # Dimensionality reduce
-            drResult = dimensionalityReduce(normalizedDataset, drName, True)
             for icName in icNames:
-                print("Non-image to image......")
+                # Need to return dr method for deepinsight
+                if icName == 'deepinsight':
+                    returnMethod = True
+                else:
+                    returnMethod = False
+                drResult = dimensionalityReduce(normalizedDataset, drName, returnMethod) # Dimensionality reduce
                 imageDataset = imageConvert(drResult, icName)  # Image convert
                 augmentedDataset = imageAugumentation(imageDataset)  # Image Augmentation
                 for CNNName in CNNNames:
-                    print("Training......")
                     results = CNNTrain(augmentedDataset, CNNName)  # CNN train
                     for accName in accNames:
-                        accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
-                        print("Accuracy: " + str(accuracy))
+                        calculateAccuracy(results, accName)  # Calculate accuracy
                         finishNum += 1
                         print('----- ' +
                               normName + '-' +
@@ -62,5 +61,5 @@ def test(filename, isRowCount):
 
 
 # Run test
-filename = 'test-RowCount.csv'
-test(filename, True)
+# filename = 'test-RowCount.csv'
+# test(filename, True)
