@@ -10,6 +10,7 @@ import numpy as np
 #   augmentedDataset: the list of test set and train set
 
 def imageAugumentation(imageDataset):
+    print("Image augumenting......")
     # Implement and run image enhance method
     # create two lists to store new img data
     newXTrainDataset = []
