@@ -17,6 +17,7 @@ warnings.simplefilter('ignore')
 # Output:
 #   result: the variable of CNN train result
 def CNNTrain(augmentedDataset, CNNName):
+    print("Training......")
     # Implement and run CNN methods
     if CNNName == 'alexnet':
         result = 1
