@@ -14,8 +14,7 @@ def installPythonDeps():
         'matplotlib', 
         'git+git://github.com/alok-ai-lab/DeepInsight.git#egg=DeepInsight',
         'phate',
-        'pyts',
-        'opencv-python'
+        'pyts'
     ]
 
     # For loop to install all packages
