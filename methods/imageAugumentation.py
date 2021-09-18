@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 import tensorflow as tf
+from PIL import ImageChops, Image
 
 # Enhance the image dataset
 # Input:
@@ -19,7 +20,8 @@ def imageAugumentation(imageDataset):
 
     for img in imageDataset[0]:
         # 3d img -> 2d img
-        # img = img[:, :, 0]
+        if img.ndim == 3:
+            img = img[:, :, 0]
         newXTrainDataset.append(img)
 
     augmentedXTrainDataset = newXTrainDataset
@@ -44,7 +46,7 @@ def imageAugumentation(imageDataset):
 #   npImage: augmented data -> (128, 128)
 def random_aug(npImage):
     # generate a random int
-    op = np.random.randint(1, 6)
+    op = np.random.randint(1, 7)
     # crop
     if (op == 1):
         npImage = crop(npImage, 40, 40)
@@ -60,6 +62,9 @@ def random_aug(npImage):
     # brightness
     if (op == 5):
         npImage = change_brightness(npImage)
+    # shift
+    if (op == 6):
+        npImage = shift(npImage)
 
     return npImage
 
@@ -141,6 +146,17 @@ def gasuss_noise(npImage, mean = 0, var = 0.005):
 #   npImage: augmented data -> (128, 128)
 def change_brightness(npImage):
     npImage = tf.image.random_brightness(npImage, 0.5)
+    return npImage
+
+# Image translation, Shift it 28 pixels to the right and 28 pixels down
+# Input:
+#   npImage: numpy format -> (128, 128)
+# Output:
+#   npImage: augmented data -> (128, 128)
+def shift(npImage):
+    npImage = Image.fromarray(npImage)
+    npImage = ImageChops.offset(npImage, 28, 28)
+    npImage = np.array(npImage)
     return npImage
 
 # Test
