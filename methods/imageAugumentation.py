@@ -62,9 +62,6 @@ def random_aug(npImage):
     if (op == 5):
         npImage = adjust_contrast(npImage)
 
-    npImage = cv2.resize(npImage, dsize=(50, 50), interpolation=cv2.INTER_CUBIC)
-    npImage = np.array(npImage)
-
     return npImage
 
 # Crop the picture
@@ -76,10 +73,12 @@ def random_aug(npImage):
 #   npImage: augmented data -> (50, 50)
 def crop(npImage, height_range, width_range):
     npImage = np.array(npImage)
-    height, width, _ = npImage.shape
+    height, width = npImage.shape
     new_height = np.random.randint(0, height - height_range)
     new_width = np.random.randint(0, width - width_range)
     npImage = npImage[new_height: new_height + height_range, new_width: new_width + width_range]
+    npImage = cv2.resize(npImage, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+    npImage = np.array(npImage)
 
     return npImage
 
@@ -92,10 +91,12 @@ def crop(npImage, height_range, width_range):
 # Output:
 #   npImage: augmented data -> (50, 50)
 def zoom(npImage, height_range, width_range, magnification):
-    height, width, _ = npImage.shape
+    height, width = npImage.shape
     # npImage = cv2.resize(npImage, (int(height * 1.5), int(width * 1.5)))
     npImage = npImage[int((height - height_range) / magnification): int((height + height_range) / magnification),
               int((width - width_range) / magnification): int((width + width_range) / magnification)]
+    npImage = cv2.resize(npImage, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+    npImage = np.array(npImage)
     return npImage
 
 # Flip the picture randomly
@@ -146,6 +147,8 @@ def adjust_contrast(npImage):
     return npImage
 
 # Test
-# imageDataset = np.load("../test.npy", allow_pickle=True)
+imageDataset = np.load("../testnp.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
-# augmented_dataset = imageAugumentation(imageDataset)
+# print(imageDataset[0].shape)
+augmented_dataset = imageAugumentation(imageDataset)
+print(augmented_dataset[0].shape)
