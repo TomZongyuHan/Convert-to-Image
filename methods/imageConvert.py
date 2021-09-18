@@ -65,8 +65,8 @@ def deepinsight(drMethod, dataset):
         n_jobs=-1)
 
     # Train and get image data
-    X_train_img = it.fit_transform(X_train_norm)
-    X_test_img = it.transform(X_test_norm)
+    X_train_img = it.fit_transform(X_train_norm).transpose(3, 0, 1, 2)
+    X_test_img = it.transform(X_test_norm).transpose(3, 0, 1, 2)
 
     return [X_train_img, X_test_img, y_train, y_test]
 
@@ -104,6 +104,7 @@ def cpcr(dataset, labels):
             if img[x][y] > 255:
                 img[x][y] = 255
         
+        img = cv2.cvtColor(np.float32(img), cv2.COLOR_GRAY2RGB).T
         imgs.append(img)
     
     imgs = np.array(imgs)
@@ -133,11 +134,17 @@ def gaf(dataset, labels):
         # All images should be strtched to 128 pixels
         for img in imgs:
             new_img = cv2.resize(img, (128, 128), interpolation = cv2.INTER_AREA)
+            new_img = cv2.cvtColor(np.float32(new_img), cv2.COLOR_GRAY2RGB).T
             new_imgs.append(new_img)
         imgs = np.array(new_imgs)
     else:
         gaf = GramianAngularField(image_size=128)
         imgs = np.array(gaf.fit_transform(dataset))
+        new_imgs = []
+        for img in imgs:
+            new_img = cv2.cvtColor(np.float32(img), cv2.COLOR_GRAY2RGB).T
+            new_imgs.append(new_img)
+        imgs = np.array(new_imgs)
 
     # Split and return image result
     X_train, X_test, y_train, y_test = train_test_split(
