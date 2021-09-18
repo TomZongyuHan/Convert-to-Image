@@ -1,6 +1,5 @@
 # Import library and methods
 import cv2
-from PIL import Image, ImageEnhance
 import numpy as np
 
 # Enhance the image dataset
@@ -58,9 +57,6 @@ def random_aug(npImage):
     # gauss_noise
     if (op == 4):
         npImage = gasuss_noise(npImage, 0, 0.005)
-    # adjust contrast
-    if (op == 5):
-        npImage = adjust_contrast(npImage)
 
     return npImage
 
@@ -134,17 +130,6 @@ def gasuss_noise(npImage, mean = 0, var = 0.005):
     # Restores to the original pixel value
     out = np.uint8(out * 255)
     return out
-
-# Adjust the contrast of the image
-# Input:
-#   npImage: numpy format -> (50, 50)
-# Output:
-#   npImage: augmented data -> (50, 50)
-def adjust_contrast(npImage):
-    npImage = Image.fromarray(npImage)
-    npImage = ImageEnhance.Contrast(npImage)
-    npImage = np.array(npImage)
-    return npImage
 
 # Test
 imageDataset = np.load("../testnp.npy", allow_pickle=True)
