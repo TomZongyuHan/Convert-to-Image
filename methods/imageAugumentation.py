@@ -1,13 +1,13 @@
 # Import library and methods
 import cv2
 import numpy as np
+import tensorflow as tf
 
 # Enhance the image dataset
 # Input:
 #   imageDataset: the variable of datasets after dimensionality reduce
 # Output:
 #   augmentedDataset: the list of test set and train set
-
 def imageAugumentation(imageDataset):
     print("Image augumenting......")
     # Implement and run image enhance method
@@ -39,12 +39,12 @@ def imageAugumentation(imageDataset):
 
 # Use random methods to enhance image data
 # Input:
-#   npImage: numpy format -> (50, 50)
+#   npImage: numpy format -> (128, 128)
 # Output:
-#   npImage: augmented data -> (50, 50)
+#   npImage: augmented data -> (128, 128)
 def random_aug(npImage):
     # generate a random int
-    op = np.random.randint(1, 5)
+    op = np.random.randint(1, 6)
     # crop
     if (op == 1):
         npImage = crop(npImage, 40, 40)
@@ -57,16 +57,19 @@ def random_aug(npImage):
     # gauss_noise
     if (op == 4):
         npImage = gasuss_noise(npImage, 0, 0.005)
+    # brightness
+    if (op == 5):
+        npImage = change_brightness(npImage)
 
     return npImage
 
 # Crop the picture
 # Input:
-#   npImage: numpy format -> (50, 50)
+#   npImage: numpy format -> (128, 128)
 #   height_range: image height required
 #   width_range: image width required
 # Output:
-#   npImage: augmented data -> (50, 50)
+#   npImage: augmented data -> (128, 128)
 def crop(npImage, height_range, width_range):
     npImage = np.array(npImage)
     height, width = npImage.shape
@@ -80,12 +83,12 @@ def crop(npImage, height_range, width_range):
 
 # Use zoom operation on the image
 # Input:
-#   npImage: numpy format -> (50, 50)
+#   npImage: numpy format -> (128, 128)
 #   height_range: image height required
 #   width_range: image width required
 #   magnification: need to enlarge the image multiple
 # Output:
-#   npImage: augmented data -> (50, 50)
+#   npImage: augmented data -> (128, 128)
 def zoom(npImage, height_range, width_range, magnification):
     height, width = npImage.shape
     # npImage = cv2.resize(npImage, (int(height * 1.5), int(width * 1.5)))
@@ -97,9 +100,9 @@ def zoom(npImage, height_range, width_range, magnification):
 
 # Flip the picture randomly
 # Input:
-#   npImage: numpy format -> (50, 50)
+#   npImage: numpy format -> (128, 128)
 # Output:
-#   npImage: augmented data -> (50, 50)
+#   npImage: augmented data -> (128, 128)
 def random_flip(npImage):
     flip_op = np.random.randint(1, 4)
     # flip vertical
@@ -115,11 +118,11 @@ def random_flip(npImage):
 
 # Add a noise layer to the picture
 # Input:
-#   npImage: numpy format -> (50, 50)
+#   npImage: numpy format -> (128, 128)
 #   mean: The mean
 #   var: The variance
 # Output:
-#   out: augmented data -> (50, 50)
+#   out: augmented data -> (128, 128)
 def gasuss_noise(npImage, mean = 0, var = 0.005):
     # nomorlized the pixel value
     npImage = np.array(npImage / 255, dtype=float)
@@ -131,9 +134,18 @@ def gasuss_noise(npImage, mean = 0, var = 0.005):
     out = np.uint8(out * 255)
     return out
 
+# change the brightness of numpy image
+# Input:
+#   npImage: numpy format -> (128, 128)
+# Output:
+#   npImage: augmented data -> (128, 128)
+def change_brightness(npImage):
+    npImage = tf.image.random_brightness(npImage, 0.5)
+    return npImage
+
 # Test
-imageDataset = np.load("../testnp.npy", allow_pickle=True)
+# imageDataset = np.load("../testnp.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
 # print(imageDataset[0].shape)
-augmented_dataset = imageAugumentation(imageDataset)
-print(augmented_dataset[0].shape)
+# augmented_dataset = imageAugumentation(imageDataset)
+# print(augmented_dataset[0].shape)
