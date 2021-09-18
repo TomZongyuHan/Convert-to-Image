@@ -23,9 +23,9 @@ def test(filename, isRowCount):
     filepath = 'originalDatasets/' + filename
 
     # Set all methods need to be test
-    normNames = ['linnorm']
+    normNames = ['phate']
     drNames = ['pca']
-    icNames = ['gaf']
+    icNames = ['deepinsight']
     CNNNames = ['vgg16']
     accNames = ['acc']
 
@@ -38,12 +38,7 @@ def test(filename, isRowCount):
         for drName in drNames:
             # Dimensionality reduce
             for icName in icNames:
-                # Need to return dr method for deepinsight
-                if icName == 'deepinsight':
-                    returnMethod = True
-                else:
-                    returnMethod = False
-                drResult = dimensionalityReduce(normalizedDataset, drName, returnMethod) # Dimensionality reduce
+                drResult = dimensionalityReduce(normalizedDataset, drName, icName)  # Dimensionality reduce
                 imageDataset = imageConvert(drResult, icName)  # Image convert
                 augmentedDataset = imageAugumentation(imageDataset)  # Image Augmentation
                 for CNNName in CNNNames:
@@ -58,6 +53,7 @@ def test(filename, isRowCount):
                               CNNName + ' finish ' +
                               str(finishNum) + '/' + str(allNum))
 
-#Run test
+
+# Run test
 filename = 'test-RowCount.csv'
 test(filename, True)
