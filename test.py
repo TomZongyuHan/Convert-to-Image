@@ -26,7 +26,7 @@ def test(filename, isRowCount):
     normNames = ['phate']
     drNames = ['pca']
     icNames = ['deepinsight']
-    CNNNames = ['alexnet']
+    CNNNames = ['vgg16']
     accNames = ['acc']
 
     # Run all methods and output results
