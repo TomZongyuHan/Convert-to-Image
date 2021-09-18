@@ -8,6 +8,9 @@ import tensorflow as tf
 #   imageDataset: the variable of datasets after dimensionality reduce
 # Output:
 #   augmentedDataset: the list of test set and train set
+from PIL import ImageChops, Image
+
+
 def imageAugumentation(imageDataset):
     print("Image augumenting......")
     # Implement and run image enhance method
@@ -44,7 +47,8 @@ def imageAugumentation(imageDataset):
 #   npImage: augmented data -> (128, 128)
 def random_aug(npImage):
     # generate a random int
-    op = np.random.randint(1, 6)
+    op = np.random.randint(1, 7)
+    op = 6
     # crop
     if (op == 1):
         npImage = crop(npImage, 40, 40)
@@ -60,6 +64,8 @@ def random_aug(npImage):
     # brightness
     if (op == 5):
         npImage = change_brightness(npImage)
+    if (op == 6):
+        npImage = shift(npImage)
 
     return npImage
 
@@ -143,9 +149,20 @@ def change_brightness(npImage):
     npImage = tf.image.random_brightness(npImage, 0.5)
     return npImage
 
+# Image translation, Shift it 28 pixels to the right and 28 pixels down
+# Input:
+#   npImage: numpy format -> (128, 128)
+# Output:
+#   npImage: augmented data -> (128, 128)
+def shift(npImage):
+    npImage = Image.fromarray(npImage)
+    npImage = ImageChops.offset(npImage, 28, 28)
+    npImage = np.array(npImage)
+    return npImage
+
 # Test
-# imageDataset = np.load("../testnp.npy", allow_pickle=True)
+imageDataset = np.load("../testnp.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
-# print(imageDataset[0].shape)
-# augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0].shape)
+print(imageDataset[0].shape)
+augmented_dataset = imageAugumentation(imageDataset)
+print(augmented_dataset[0].shape)
