@@ -12,7 +12,12 @@ def installPythonDeps():
         'scikit-learn', 
         'pandas',
         'matplotlib', 
-        'git+git://github.com/alok-ai-lab/DeepInsight.git#egg=DeepInsight'
+        'git+git://github.com/alok-ai-lab/DeepInsight.git#egg=DeepInsight',
+        'phate',
+        'pyts',
+        'tensorflow',
+        'torch',
+        'torchvision'
     ]
 
     # For loop to install all packages

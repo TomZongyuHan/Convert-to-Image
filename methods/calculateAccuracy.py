@@ -10,11 +10,10 @@ from sklearn.metrics import recall_score
 #   result: the variable of CNN train result
 # Output:
 #   result files will be store in ./results
-def calculateAccuracy(result, method = "acc"):
+def calculateAccuracy(result, method):
     # Implement and run calculate accuracy method
     if method == "acc":
         test_acc_score = accuracy_score(result[2], result[3])
-
     elif method =="f1_macro":
         test_acc_score = f1_score(result[2], result[3], average='macro')
     elif method =="f1_micro":
