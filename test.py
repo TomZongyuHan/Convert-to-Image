@@ -23,11 +23,11 @@ def test(filename, isRowCount):
     filepath = 'originalDatasets/' + filename
 
     # Set all methods need to be test
-    normNames = ['phate']
-    drNames = ['pca']
-    icNames = ['deepinsight']
-    CNNNames = ['vgg16']
-    accNames = ['acc']
+    normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
+    drNames = ['pca', 'kpca', 'tsne', 'phate']
+    icNames = ['deepinsight', 'cpcr', 'gaf']
+    CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
+    accNames = ['acc', 'f1_macro', 'f1_micro', 'f1_weighted', 'precision', 'recall']
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
@@ -50,7 +50,8 @@ def test(filename, isRowCount):
                               normName + '-' +
                               drName + '-' +
                               icName + '-' +
-                              CNNName + ' finish ' +
+                              CNNName + '-' +
+                              accNames +' finish ' +
                               str(finishNum) + '/' + str(allNum))
 
 
