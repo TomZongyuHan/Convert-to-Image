@@ -16,8 +16,8 @@ import cv2
 #   icName: the name of image convert method
 # Output:
 #   imageDataset: the list of image datasets
-#       imageDataset[0] is X train data
-#       imageDataset[1] is X test data
+#       imageDataset[0] is X train data: (imgNum, channels, pixel, pixel)
+#       imageDataset[1] is X test data: (imgNum, channels, pixel, pixel)
 #       imageDataset[2] is y train data
 #       imageDataset[3] is y test data
 def imageConvert(drResult, icName):
@@ -65,8 +65,8 @@ def deepinsight(drMethod, dataset):
         n_jobs=-1)
 
     # Train and get image data
-    X_train_img = it.fit_transform(X_train_norm).transpose(3, 0, 1, 2)
-    X_test_img = it.transform(X_test_norm).transpose(3, 0, 1, 2)
+    X_train_img = it.fit_transform(X_train_norm).transpose(0, 3, 1, 2)
+    X_test_img = it.transform(X_test_norm).transpose(0, 3, 1, 2)
 
     return [X_train_img, X_test_img, y_train, y_test]
 
