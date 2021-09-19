@@ -39,9 +39,10 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
 
     # Import R's packages
     importr('Linnorm')  # for linnorm
-    importr('scone')  # for scone/TTM/scran
+    importr('scone')  # for scone/TTM
     importr('edgeR')  # for cpm
     importr('Seurat')  # for seurat
+    importr('scran')  # for scran
 
     robjects.r("""
             # This function used to read, clean and normalize data

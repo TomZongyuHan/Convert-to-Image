@@ -24,5 +24,6 @@ def calculateAccuracy(result, method):
         test_acc_score = precision_score(result[0], result[1], average="macro")
     elif method =="recall":
         test_acc_score = recall_score(result[0], result[1], average="macro")
-    print(test_acc_score)
+    return test_acc_score
 
+    

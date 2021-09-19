@@ -38,6 +38,7 @@ def installRDeps():
         BiocManager::install("Linnorm", force = TRUE)
         BiocManager::install("edgeR", force = TRUE)
         BiocManager::install("scone", force = TRUE)
+        BiocManager::install("scran", force = TRUE)
         install.packages("Seurat", repos = "http://cran.r-project.org")
     """)
 
