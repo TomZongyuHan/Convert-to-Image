@@ -34,6 +34,7 @@ def CNNTrain(augmentedDataset, CNNName):
         y_test_enc = le.transform(y_test)
         num_classes = np.unique(y_train_enc).size
 
+        torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
         net = torch.hub.load('pytorch/vision:v0.9.0', 'alexnet', pretrained=False, verbose=False)
         # net.classifier[1] = nn.Linear(512, num_classes)
         net.fc = nn.Linear(4096, num_classes)
@@ -173,8 +174,9 @@ def CNNTrain(augmentedDataset, CNNName):
         y_test_enc = le.transform(y_test)
         num_classes = np.unique(y_train_enc).size
 
-        net = torch.hub.load('pytorch/vision:v0.9.0', 'squeezenet1_1', pretrained=False, verbose=False).double()
-        net.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1)).double()
+        torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
+        net = torch.hub.load('pytorch/vision:v0.9.0', 'squeezenet1_1', pretrained=False, verbose=False)
+        net.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1))
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -184,10 +186,10 @@ def CNNTrain(augmentedDataset, CNNName):
             transforms.ToTensor()
         ])
 
-        X_train_tensor = torch.stack([preprocess(img) for img in X_train_img]).to(device)
+        X_train_tensor = torch.stack([preprocess(img) for img in X_train_img]).float().to(device)
         y_train_tensor = torch.from_numpy(le.fit_transform(y_train)).to(device)
 
-        X_test_tensor = torch.stack([preprocess(img) for img in X_test_img]).to(device)
+        X_test_tensor = torch.stack([preprocess(img) for img in X_test_img]).float().to(device)
         y_test_tensor = torch.from_numpy(le.transform(y_test)).to(device)
 
         X_train_tensor.dtype
@@ -239,6 +241,7 @@ def CNNTrain(augmentedDataset, CNNName):
         y_test_enc = le.transform(y_test)
         num_classes = np.unique(y_train_enc).size
 
+        torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
         net = torch.hub.load('pytorch/vision:v0.9.0', 'resnet50', pretrained=False, verbose=False)
         net.fc = nn.Linear(2048, num_classes)
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -303,6 +306,7 @@ def CNNTrain(augmentedDataset, CNNName):
         y_test_enc = le.transform(y_test)
         num_classes = np.unique(y_train_enc).size
 
+        torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
         net = torch.hub.load('pytorch/vision:v0.9.0', 'densenet121', pretrained=False, verbose=False)
 
         net.fc = nn.Linear(18085, num_classes)

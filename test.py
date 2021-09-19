@@ -8,6 +8,7 @@ from imageConvert import imageConvert
 from imageAugumentation import imageAugumentation
 from CNNTrain import CNNTrain
 from calculateAccuracy import calculateAccuracy
+import numpy as np
 
 # test methods included in the pipeline
 # Input:
@@ -28,31 +29,90 @@ def test(filename, isRowCount):
     icNames = ['deepinsight', 'cpcr', 'gaf']
     CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
     accNames = ['acc', 'f1_macro', 'f1_micro', 'f1_weighted', 'precision', 'recall']
+    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames) * len(accNames)  # calculate how many methods exist
+
+    # Handle the results file, skip completed method
+    try:
+        test_results = np.array(np.load('results/accuracies/testResults.npy', allow_pickle = True))
+    except IOError:
+        test_results = np.zeros((allNum, 2), dtype = np.float64)
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
-    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames) * len(accNames)  # calculate how many methods exist
     for normName in normNames:
-        # Data clean and normalize
-        normalizedDataset = dataCleanAndNormalize(filepath, isRowCount, normName)
+        # The finishNum + 360 is last method line of this normalization
+        # Check if need to skip one normalization method
+        rst = checkSkipMethod('norm', finishNum + 360, test_results, [filepath, isRowCount, normName])
+        if isinstance(rst, int):
+            finishNum = rst
+            continue
+        else:
+            normalizedDataset = rst
         for drName in drNames:
-            # Dimensionality reduce
             for icName in icNames:
-                drResult = dimensionalityReduce(normalizedDataset, drName, icName)  # Dimensionality reduce
-                imageDataset = imageConvert(drResult, icName)  # Image convert
-                augmentedDataset = imageAugumentation(imageDataset)  # Image Augmentation
+                # Check if need to skip one dimensionality reduce method
+                rst = checkSkipMethod('dr', finishNum + 90, test_results, [normalizedDataset, drName, icName])
+                if isinstance(rst, int):
+                    finishNum = rst
+                    continue
+                else:
+                    drResult = rst
+                # Check if need to skip one image convert method
+                rst = checkSkipMethod('ic', finishNum + 30, test_results, [drResult, icName])
+                if isinstance(rst, int):
+                    finishNum = rst
+                    continue
+                else:
+                    augmentedDataset = rst
                 for CNNName in CNNNames:
-                    results = CNNTrain(augmentedDataset, CNNName)  # CNN train
+                    # Check if need to skip one cnn method
+                    rst = checkSkipMethod('cnn', finishNum + 6, test_results, [augmentedDataset, CNNName])
+                    if isinstance(rst, int):
+                        finishNum = rst
+                        continue
+                    else:
+                        results = rst
                     for accName in accNames:
-                        calculateAccuracy(results, accName)  # Calculate accuracy
+                        methodName = normName + '-' + drName + '-' + icName + '-' + CNNName + '-' + accName
+                        accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
+                        # Save the result in results/accuracies
+                        test_results[finishNum][0] = finishNum
+                        test_results[finishNum][1] = accuracy
+                        np.save('results/accuracies/testResults.npy', test_results)
+
+                        # Print method name and finish num at terminal
                         finishNum += 1
                         print('----- ' +
-                              normName + '-' +
-                              drName + '-' +
-                              icName + '-' +
-                              CNNName + '-' +
-                              accNames +' finish ' +
-                              str(finishNum) + '/' + str(allNum))
+                            methodName + ' finish ' +
+                            str(finishNum) + '/' + str(allNum))   
+
+# Check if skip this method and call the method
+def checkSkipMethod(methodName, finishNum, test_results, params):
+    skipFlag = float(test_results[finishNum][1]) != float(0) and float(test_results[finishNum][0]) == float(finishNum)
+    if methodName == 'norm':
+        if not skipFlag:
+            # If return the result of method, do not need to skip
+            result = dataCleanAndNormalize(params[0], params[1], params[2]) # Data clean and normalize
+        else:
+            # If return the number of finishNum, need to skip these methods
+            result = finishNum
+    elif methodName == 'dr':
+        if not skipFlag:
+            result = dimensionalityReduce(params[0], params[1], params[2]) # Dimensionality reduce
+        else:
+            result = finishNum
+    elif methodName == 'ic':
+        if not skipFlag:
+            imageDataset = imageConvert(params[0], params[1])  # Image convert
+            result = imageAugumentation(imageDataset)  # Image Augmentation
+        else:
+            result = finishNum
+    elif methodName == 'cnn':
+        if not skipFlag:
+            result = CNNTrain(params[0], params[1])  # CNN train
+        else:
+            result = finishNum
+    return result
 
 
 # Run test
