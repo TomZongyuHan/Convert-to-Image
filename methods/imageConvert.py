@@ -21,19 +21,19 @@ import cv2
 #       imageDataset[2] is y train data
 #       imageDataset[3] is y test data
 def imageConvert(drResult, icName):
-    print("Image converting......")
+    # print("Image converting......")
     # Run image convert methods
     if icName == 'deepinsight':
         drMethod = drResult[0]
         dataset = drResult[1]
         imageDataset = deepinsight(drMethod, dataset)
     elif icName == 'cpcr':
-        dataset = drResult[0]
-        labels = drResult[1]
+        dataset = drResult[2]
+        labels = drResult[3]
         imageDataset = cpcr(dataset, labels)
     elif icName == 'gaf':
-        dataset = drResult[0]
-        labels = drResult[1]
+        dataset = drResult[2]
+        labels = drResult[3]
         imageDataset = gaf(dataset, labels)
     else:
         print("????? Please enter a correct image convert method name ?????")
