@@ -17,8 +17,8 @@ import phate
 # Output:
 #   drDataset: the variable of datasets after dimensionality reduce
 #   list of drMethod and normalizedDataset: if use returnMethod
-def dimensionalityReduce(normalizedDataset, drName, icName):
-    print("Dimension Reducing......")
+def dimensionalityReduce(normalizedDataset, drName):
+    # print("Dimension Reducing......")
     # Transpose the dataset for dimensionality reduction
     # normalizedDatasetT = np.transpose(normalizedDataset)
     normalizedDatasetT = normalizedDataset.transpose()
@@ -45,10 +45,7 @@ def dimensionalityReduce(normalizedDataset, drName, icName):
     drDataset = drDatasetT.transpose()
 
     # Return the result
-    if icName == 'deepinsight':
-        return [drMethod, normalizedDataset]
-    else:
-        return [drDataset, labels]
+    return [drMethod, normalizedDataset, drDataset, labels]
 
 # Test
 # from methods import dataCleanAndNormalize

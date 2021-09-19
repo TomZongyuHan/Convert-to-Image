@@ -35,40 +35,40 @@ def test(filename, isRowCount):
     try:
         test_results = np.array(np.load('results/accuracies/testResults.npy', allow_pickle = True))
     except IOError:
-        test_results = np.zeros((allNum, 2), dtype = np.float64)
+        test_results = np.zeros((allNum, 1), dtype = np.float64)
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
     for normName in normNames:
         # The finishNum + 360 is last method line of this normalization
         # Check if need to skip one normalization method
-        rst = checkSkipMethod('norm', finishNum + 360, test_results, [filepath, isRowCount, normName])
+        rst = checkSkipMethod('norm', finishNum + 359, test_results, [filepath, isRowCount, normName])
         if isinstance(rst, int):
-            finishNum = rst
+            finishNum = rst + 1
             continue
         else:
             normalizedDataset = rst
         for drName in drNames:
+            # Check if need to skip one dimensionality reduce method
+            rst = checkSkipMethod('dr', finishNum + 89, test_results, [normalizedDataset, drName])
+            if isinstance(rst, int):
+                finishNum = rst + 1
+                continue
+            else:
+                drResult = rst
             for icName in icNames:
-                # Check if need to skip one dimensionality reduce method
-                rst = checkSkipMethod('dr', finishNum + 90, test_results, [normalizedDataset, drName, icName])
-                if isinstance(rst, int):
-                    finishNum = rst
-                    continue
-                else:
-                    drResult = rst
                 # Check if need to skip one image convert method
-                rst = checkSkipMethod('ic', finishNum + 30, test_results, [drResult, icName])
+                rst = checkSkipMethod('ic', finishNum + 29, test_results, [drResult, icName])
                 if isinstance(rst, int):
-                    finishNum = rst
+                    finishNum = rst + 1
                     continue
                 else:
                     augmentedDataset = rst
                 for CNNName in CNNNames:
                     # Check if need to skip one cnn method
-                    rst = checkSkipMethod('cnn', finishNum + 6, test_results, [augmentedDataset, CNNName])
+                    rst = checkSkipMethod('cnn', finishNum + 5, test_results, [augmentedDataset, CNNName])
                     if isinstance(rst, int):
-                        finishNum = rst
+                        finishNum = rst + 1
                         continue
                     else:
                         results = rst
@@ -76,8 +76,7 @@ def test(filename, isRowCount):
                         methodName = normName + '-' + drName + '-' + icName + '-' + CNNName + '-' + accName
                         accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
                         # Save the result in results/accuracies
-                        test_results[finishNum][0] = finishNum
-                        test_results[finishNum][1] = accuracy
+                        test_results[finishNum] = accuracy
                         np.save('results/accuracies/testResults.npy', test_results)
 
                         # Print method name and finish num at terminal
@@ -88,7 +87,7 @@ def test(filename, isRowCount):
 
 # Check if skip this method and call the method
 def checkSkipMethod(methodName, finishNum, test_results, params):
-    skipFlag = float(test_results[finishNum][1]) != float(0) and float(test_results[finishNum][0]) == float(finishNum)
+    skipFlag = float(test_results[finishNum]) != float(0)
     if methodName == 'norm':
         if not skipFlag:
             # If return the result of method, do not need to skip
@@ -98,7 +97,7 @@ def checkSkipMethod(methodName, finishNum, test_results, params):
             result = finishNum
     elif methodName == 'dr':
         if not skipFlag:
-            result = dimensionalityReduce(params[0], params[1], params[2]) # Dimensionality reduce
+            result = dimensionalityReduce(params[0], params[1]) # Dimensionality reduce
         else:
             result = finishNum
     elif methodName == 'ic':
