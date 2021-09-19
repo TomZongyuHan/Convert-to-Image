@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
+from skimage import transform
 import warnings
 
 warnings.simplefilter('ignore')
@@ -23,8 +24,8 @@ def CNNTrain(augmentedDataset, CNNName):
     # Implement and run CNN methods
     if CNNName == 'alexnet':
 
-        X_train_img = augmentedDataset[0]
-        X_test_img = augmentedDataset[1]
+        X_train_img = augmentedDataset[0].transpose(0, 2, 3, 1)
+        X_test_img = augmentedDataset[1].transpose(0, 2, 3, 1)
         y_train = augmentedDataset[2]
         y_test = augmentedDataset[3]
 
@@ -85,30 +86,18 @@ def CNNTrain(augmentedDataset, CNNName):
             # print('[%d] loss: %.3f' %
             #       (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
 
-        net.eval()
-        with torch.no_grad():
-            train_outputs = net(X_train_tensor)
-            _, train_predicted = torch.max(train_outputs, 1)
-            test_outputs = net(X_test_tensor)
-            _, test_predicted = torch.max(test_outputs, 1)
-        print("The train accuracy was {:.3f}".format(
-            accuracy_score(train_predicted.cpu().numpy(), y_train_tensor.cpu().numpy())))
-        print("The test accuracy was {:.3f}".format(
-            accuracy_score(test_predicted.cpu().numpy(), y_test_tensor.cpu().numpy())))
 
         testset = TensorDataset(X_test_tensor, y_test_tensor)
         testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
         # Run evaluation function to get results
-        trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
-        # Return all results
-        return [trainResult, trainLabel, testResult, testLabel]
+
 
     elif CNNName == 'vgg16':
 
         # augmentedDataset = np.load("./test_Bruce.npy", allow_pickle = True)
-        X_train_img = augmentedDataset[0]
-        X_test_img = augmentedDataset[1]
+        X_train_img = augmentedDataset[0].transpose(0, 2, 3, 1)
+        X_test_img = augmentedDataset[1].transpose(0, 2, 3, 1)
         y_train = augmentedDataset[2]
         y_test = augmentedDataset[3]
 
@@ -170,15 +159,12 @@ def CNNTrain(augmentedDataset, CNNName):
         testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
 
         # Run evaluation function to get results
-        trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
 
-        # Return all results
-        return [trainResult, trainLabel, testResult, testLabel]
 
     elif CNNName == 'squeezenet':
-        X_train_img = augmentedDataset[0]
-        X_test_img = augmentedDataset[1]
+        X_train_img = augmentedDataset[0].transpose(0, 2, 3, 1)
+        X_test_img = augmentedDataset[1].transpose(0, 2, 3, 1)
         y_train = augmentedDataset[2]
         y_test = augmentedDataset[3]
 
@@ -236,28 +222,15 @@ def CNNTrain(augmentedDataset, CNNName):
             # print('[%d] loss: %.3f' %
             #       (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
 
-        net.eval()
-        with torch.no_grad():
-            train_outputs = net(X_train_tensor)
-            _, train_predicted = torch.max(train_outputs, 1)
-            test_outputs = net(X_test_tensor)
-            _, test_predicted = torch.max(test_outputs, 1)
-        print("The train accuracy was {:.3f}".format(
-            accuracy_score(train_predicted.cpu().numpy(), y_train_tensor.cpu().numpy())))
-        print("The test accuracy was {:.3f}".format(
-            accuracy_score(test_predicted.cpu().numpy(), y_test_tensor.cpu().numpy())))
 
         testset = TensorDataset(X_test_tensor, y_test_tensor)
         testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
         # Run evaluation function to get results
-        trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
-        # Return all results
-        return [trainResult, trainLabel, testResult, testLabel]
 
     elif CNNName == 'resnet':
-        X_train_img = augmentedDataset[0]
-        X_test_img = augmentedDataset[1]
+        X_train_img = augmentedDataset[0].transpose(0, 2, 3, 1)
+        X_test_img = augmentedDataset[1].transpose(0, 2, 3, 1)
         y_train = augmentedDataset[2]
         y_test = augmentedDataset[3]
 
@@ -309,32 +282,19 @@ def CNNTrain(augmentedDataset, CNNName):
 
                 running_loss += loss.item()
             # print epoch statistics
-            print('[%d] loss: %.3f' %
-                  (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
+            # print('[%d] loss: %.3f' %
+            #       (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
 
-        net.eval()
-        with torch.no_grad():
-            train_outputs = net(X_train_tensor)
-            _, train_predicted = torch.max(train_outputs, 1)
-            test_outputs = net(X_test_tensor)
-            _, test_predicted = torch.max(test_outputs, 1)
-        print("The train accuracy was {:.3f}".format(
-            accuracy_score(train_predicted.cpu().numpy(), y_train_tensor.cpu().numpy())))
-        print("The test accuracy was {:.3f}".format(
-            accuracy_score(test_predicted.cpu().numpy(), y_test_tensor.cpu().numpy())))
 
         testset = TensorDataset(X_test_tensor, y_test_tensor)
         testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
         # Run evaluation function to get results
-        trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
 
-        # Return all results
-        return [trainResult, trainLabel, testResult, testLabel]
 
     elif CNNName == 'densenet':
-        X_train_img = augmentedDataset[0]
-        X_test_img = augmentedDataset[1]
+        X_train_img = augmentedDataset[0].transpose(0, 2, 3, 1)
+        X_test_img = augmentedDataset[1].transpose(0, 2, 3, 1)
         y_train = augmentedDataset[2]
         y_test = augmentedDataset[3]
 
@@ -390,22 +350,21 @@ def CNNTrain(augmentedDataset, CNNName):
 
                 running_loss += loss.item()
             # print epoch statistics
-            print('[%d] loss: %.3f' %
-                  (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
+            # print('[%d] loss: %.3f' %
+            #       (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
 
         testset = TensorDataset(X_test_tensor, y_test_tensor)
         testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
 
         # Run evaluation function to get results
-        trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
 
-        # Return all results
-        return [trainResult, trainLabel, testResult, testLabel]
 
     else:
         print("Please enter a correct CNN method name.")
 
+    # Return all results
+    return [testResult, testLabel]
 
 def evaluation(loader, net):
     net.eval()

@@ -13,16 +13,16 @@ from sklearn.metrics import recall_score
 def calculateAccuracy(result, method):
     # Implement and run calculate accuracy method
     if method == "acc":
-        test_acc_score = accuracy_score(result[2], result[3])
+        test_acc_score = accuracy_score(result[0], result[1])
     elif method =="f1_macro":
-        test_acc_score = f1_score(result[2], result[3], average='macro')
+        test_acc_score = f1_score(result[0], result[1], average='macro')
     elif method =="f1_micro":
-        test_acc_score = f1_score(result[2], result[3], average='micro')
+        test_acc_score = f1_score(result[0], result[1], average='micro')
     elif method =="f1_weighted":
-        test_acc_score = f1_score(result[2], result[3], average='weighted')
+        test_acc_score = f1_score(result[0], result[1], average='weighted')
     elif method =="precision":
-        test_acc_score = precision_score(result[2], result[3], average="macro")
+        test_acc_score = precision_score(result[0], result[1], average="macro")
     elif method =="recall":
-        test_acc_score = recall_score(result[2], result[3], average="macro")
+        test_acc_score = recall_score(result[0], result[1], average="macro")
     print(test_acc_score)
-    return test_acc_score
+
