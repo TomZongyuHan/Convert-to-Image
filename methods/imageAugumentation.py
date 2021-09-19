@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from PIL import ImageChops, Image
+from skimage import transform
 
 # Enhance the image dataset
 # Input:
@@ -20,8 +21,9 @@ def imageAugumentation(imageDataset):
 
     for img in imageDataset[0]:
         # 3d img -> 2d img
-        if img.ndim == 3:
-            img = img[:, :, 0]
+        # if img.ndim == 3:
+        #     img = img[:, :, 0]
+        # 3 128 128
         newXTrainDataset.append(img)
 
     augmentedXTrainDataset = newXTrainDataset
@@ -49,13 +51,13 @@ def random_aug(npImage):
     op = np.random.randint(1, 7)
     # crop
     if (op == 1):
-        npImage = crop(npImage, 40, 40)
+        npImage = crop(npImage, 100, 100)
     # random flip
     if (op == 2):
         npImage = random_flip(npImage)
     # zoom
     if (op == 3):
-        npImage = zoom(npImage, 40, 40, 2)
+        npImage = zoom(npImage, 100, 100, 2)
     # gauss_noise
     if (op == 4):
         npImage = gasuss_noise(npImage, 0, 0.005)
@@ -77,11 +79,11 @@ def random_aug(npImage):
 #   npImage: augmented data -> (128, 128)
 def crop(npImage, height_range, width_range):
     npImage = np.array(npImage)
-    height, width = npImage.shape
+    _, height, width = npImage.shape
     new_height = np.random.randint(0, height - height_range)
     new_width = np.random.randint(0, width - width_range)
-    npImage = npImage[new_height: new_height + height_range, new_width: new_width + width_range]
-    npImage = cv2.resize(npImage, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+    npImage = npImage[:, new_height: new_height + height_range, new_width: new_width + width_range]
+    npImage = transform.resize(npImage, (3, 128, 128))
     npImage = np.array(npImage)
 
     return npImage
@@ -95,11 +97,11 @@ def crop(npImage, height_range, width_range):
 # Output:
 #   npImage: augmented data -> (128, 128)
 def zoom(npImage, height_range, width_range, magnification):
-    height, width = npImage.shape
+    _, height, width = npImage.shape
     # npImage = cv2.resize(npImage, (int(height * 1.5), int(width * 1.5)))
-    npImage = npImage[int((height - height_range) / magnification): int((height + height_range) / magnification),
+    npImage = npImage[:, int((height - height_range) / magnification): int((height + height_range) / magnification),
               int((width - width_range) / magnification): int((width + width_range) / magnification)]
-    npImage = cv2.resize(npImage, dsize=(128, 128), interpolation=cv2.INTER_CUBIC)
+    npImage = transform.resize(npImage, (3, 128, 128))
     npImage = np.array(npImage)
     return npImage
 
@@ -109,16 +111,13 @@ def zoom(npImage, height_range, width_range, magnification):
 # Output:
 #   npImage: augmented data -> (128, 128)
 def random_flip(npImage):
-    flip_op = np.random.randint(1, 4)
+    flip_op = np.random.randint(1, 3)
     # flip vertical
     if (flip_op == 1):
-        npImage = np.flip(npImage)
+        npImage = cv2.flip(npImage, 0)
     # flip horizontal
     if (flip_op == 2):
-        npImage = np.fliplr(npImage)
-    # rotate 90 degree
-    if (flip_op == 3):
-        npImage = np.rot90(npImage)
+        npImage = np.flip(npImage, 1)
     return npImage
 
 # Add a noise layer to the picture
@@ -154,13 +153,15 @@ def change_brightness(npImage):
 # Output:
 #   npImage: augmented data -> (128, 128)
 def shift(npImage):
-    npImage = Image.fromarray(npImage)
+    npImage = npImage.transpose(1, 2, 0)
+    npImage = Image.fromarray(np.uint8(npImage))
     npImage = ImageChops.offset(npImage, 28, 28)
     npImage = np.array(npImage)
+    npImage = npImage.transpose(2, 0, 1)
     return npImage
 
 # Test
-# imageDataset = np.load("../testnp.npy", allow_pickle=True)
+# imageDataset = np.load("../testnpy.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
 # print(imageDataset[0].shape)
 # augmented_dataset = imageAugumentation(imageDataset)
