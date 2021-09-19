@@ -8,7 +8,7 @@ from imageConvert import imageConvert
 from imageAugumentation import imageAugumentation
 from CNNTrain import CNNTrain
 from calculateAccuracy import calculateAccuracy
-import numpy as np
+
 # test methods included in the pipeline
 # Input:
 #   filename: string value, the name of csv file (include .csv)
@@ -26,7 +26,7 @@ def test(filename, isRowCount):
     normNames = ['phate']
     drNames = ['pca']
     icNames = ['deepinsight']
-    CNNNames = ['alexnet']
+    CNNNames = ['vgg16']
     accNames = ['acc']
 
     # Run all methods and output results
