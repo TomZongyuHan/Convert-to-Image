@@ -67,7 +67,6 @@ def random_aug(npImage):
     # shift
     if (op == 6):
         npImage = shift(npImage)
-
     return npImage
 
 # Crop the picture
@@ -164,5 +163,7 @@ def shift(npImage):
 # imageDataset = np.load("../testnpy.npy", allow_pickle=True)
 # ([x train], [x test], [y train], [y test])
 # print(imageDataset[0].shape)
+# [[144, 3, 128, 128], [18, 3, 128, 128], [144,], [18]]
 # augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[0].shape)
+# print(augmented_dataset[1].shape)
+# npImage = npImage.transpose(0, 2, 3, 1) -> [144, 128, 128, 3]

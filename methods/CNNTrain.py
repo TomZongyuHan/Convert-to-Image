@@ -96,6 +96,8 @@ def CNNTrain(augmentedDataset, CNNName):
         print("The test accuracy was {:.3f}".format(
             accuracy_score(test_predicted.cpu().numpy(), y_test_tensor.cpu().numpy())))
 
+        testset = TensorDataset(X_test_tensor, y_test_tensor)
+        testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
         # Run evaluation function to get results
         trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
@@ -245,6 +247,8 @@ def CNNTrain(augmentedDataset, CNNName):
         print("The test accuracy was {:.3f}".format(
             accuracy_score(test_predicted.cpu().numpy(), y_test_tensor.cpu().numpy())))
 
+        testset = TensorDataset(X_test_tensor, y_test_tensor)
+        testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
         # Run evaluation function to get results
         trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
@@ -319,6 +323,8 @@ def CNNTrain(augmentedDataset, CNNName):
         print("The test accuracy was {:.3f}".format(
             accuracy_score(test_predicted.cpu().numpy(), y_test_tensor.cpu().numpy())))
 
+        testset = TensorDataset(X_test_tensor, y_test_tensor)
+        testloader = DataLoader(testset, batch_size=batch_size, shuffle=True)
         # Run evaluation function to get results
         trainResult, trainLabel = evaluation(trainloader, net)
         testResult, testLabel = evaluation(testloader, net)
