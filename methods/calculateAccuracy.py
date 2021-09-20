@@ -1,5 +1,4 @@
 # Import library and methods
-import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score

@@ -10,6 +10,7 @@ from CNNTrain import CNNTrain
 from calculateAccuracy import calculateAccuracy
 import numpy as np
 
+
 # test methods included in the pipeline
 # Input:
 #   filename: string value, the name of csv file (include .csv)
@@ -35,12 +36,12 @@ def test(filename, isRowCount):
     try:
         test_results = np.array(np.load('results/accuracies/testResults.npy', allow_pickle = True))
     except IOError:
-        test_results = np.zeros((allNum, 1), dtype = np.float64)
+        test_results = np.zeros((allNum, 1), dtype = np.float64) # allNum should be 2160
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
     for normName in normNames:
-        # The finishNum + 360 is last method line of this normalization
+        # The finishNum + 359 is last method line of this normalization
         # Check if need to skip one normalization method
         rst = checkSkipMethod('norm', finishNum + 359, test_results, [filepath, isRowCount, normName])
         if isinstance(rst, int):
@@ -84,6 +85,7 @@ def test(filename, isRowCount):
                         print('----- ' +
                             methodName + ' finish ' +
                             str(finishNum) + '/' + str(allNum))   
+
 
 # Check if skip this method and call the method
 def checkSkipMethod(methodName, finishNum, test_results, params):
