@@ -9,6 +9,7 @@ from imageAugumentation import imageAugumentation
 from CNNTrain import CNNTrain
 from calculateAccuracy import calculateAccuracy
 import numpy as np
+import pandas as pd
 
 
 # test methods included in the pipeline
@@ -84,7 +85,7 @@ def test(filename, isRowCount):
                         finishNum += 1
                         print('----- ' +
                             methodName + ' finish ' +
-                            str(finishNum) + '/' + str(allNum))   
+                            str(finishNum) + '/' + str(allNum))     
 
 
 # Check if skip this method and call the method
@@ -114,6 +115,29 @@ def checkSkipMethod(methodName, finishNum, test_results, params):
         else:
             result = finishNum
     return result
+
+
+def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
+    # Import result list from npy data
+    resultsList = np.array(np.load('results/accuracies/testResults.npy', allow_pickle = True)).tolist()
+
+    # Iterate to get new result list
+    newList = []
+    index = 0
+    for normName in normNames:
+        for drName in drNames:
+            for icName in icNames:
+                for CNNName in CNNNames:
+                    for accName in accNames:
+                        results = [normName, drName, icName, CNNName, accName, resultsList[index][0]]
+                        newList.append(results)
+                        index += 1
+
+    # Save the final result at csv file with descending sort
+    columnNames = ['normName', 'drName', 'icName', 'CNNName', 'accName', 'accuracy']
+    df = pd.DataFrame(newList, columns = columnNames)
+    df.sort_values(by = 'accuracy', ascending=False, inplace=True)
+    df.to_csv('results/accuracies/testResults.csv', index = False)
 
 
 # Run test
