@@ -109,7 +109,10 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
         normalized_dataset = pd.DataFrame(data=robjects.conversion.rpy2py(dataframe))
 
     # Add columns name to dataframe
-    normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).index
+    if isRowCount == 'TRUE':
+        normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).index
+    else:
+        normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).columns
 
     # Return processed dataset
     return normalized_dataset
