@@ -140,6 +140,6 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
     df.to_csv('results/accuracies/testResults.csv', index = False)
 
 
-# Run test
-filename = 'test-RowCount.csv'
+# Please use the file name that you want to process e.g. yan-rowCount.csv
+filename = '.csv'
 test(filename, True)
