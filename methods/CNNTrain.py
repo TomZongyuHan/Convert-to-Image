@@ -108,7 +108,7 @@ def trainModel(model, trainloader):
     optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
 
     # Run training use the epoch num
-    epochNum = 50
+    epochNum = 300
     for epoch in range(epochNum):
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
