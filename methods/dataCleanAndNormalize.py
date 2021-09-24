@@ -112,7 +112,14 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     if isRowCount == 'TRUE':
         normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).index
     else:
-        normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).columns
+        col_names = pd.read_csv(filepathpy, header=0, index_col=0).columns.tolist()
+        for i in range(len(col_names)):
+            name = col_names[i].split('.')
+            if len(name)>1:
+                col_names[i] = name[:-1]
+            else:
+                col_names[i] = name
+        normalized_dataset.columns = col_names
 
     # Return processed dataset
     return normalized_dataset
