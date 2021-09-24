@@ -16,7 +16,10 @@ def imageAugumentation(imageDataset):
     # create two lists to store new img data
     newXTrainDataset = []
     newXTestDataset = imageDataset[1]
-    newYTrainDataset = imageDataset[2].tolist()
+    if not isinstance(imageDataset[2], list):
+        newYTrainDataset = imageDataset[2].tolist()
+    else:
+        newYTrainDataset = imageDataset[2]
     newYTestDataset = imageDataset[3]
 
     for img in imageDataset[0]:
