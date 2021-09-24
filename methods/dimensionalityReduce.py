@@ -22,10 +22,10 @@ def dimensionalityReduce(normalizedDataset, drName):
     # Transpose the dataset for dimensionality reduction
     # normalizedDatasetT = np.transpose(normalizedDataset)
     normalizedDatasetT = normalizedDataset.transpose()
-    labels = normalizedDatasetT.columns.tolist()
+    labels = normalizedDataset.columns.tolist()
     for i in range(len(labels)):
         name = labels[i].split('.')
-        if len(name)>1:
+        if len(name) > 1:
             labels[i] = ''.join([str(elem) for elem in name[:-1]])
         else:
             labels[i] = name[0]
@@ -33,16 +33,16 @@ def dimensionalityReduce(normalizedDataset, drName):
     # Implement and run dimensionality reduction methods
     if drName == 'pca':
         drMethod = PCA(n_components=2)
-        drDatasetT = drMethod.fit_transform(normalizedDatasetT)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'kpca':
         drMethod = KernelPCA(n_components=2, kernel='sigmoid')
-        drDatasetT = drMethod.fit_transform(normalizedDatasetT)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'tsne':
         drMethod = TSNE(n_components=2, n_jobs=-1)
-        drDatasetT = drMethod.fit_transform(normalizedDatasetT)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'phate':
         drMethod = phate.PHATE()
-        drDatasetT = drMethod.fit_transform(normalizedDatasetT)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     else:
         print("????? Please enter a correct normalize name ?????")
 
@@ -53,17 +53,15 @@ def dimensionalityReduce(normalizedDataset, drName):
     # Return the result
     return [drMethod, normalizedDataset, drDataset, labels]
 
+
 # Test
 # from methods import dataCleanAndNormalize
 #
-# filepath = '../originalDatasets/' + 'test-RowCount.csv'
+# filepath = '../originalDatasets/' + 'TabulaMuris_Thymus_10X-RowCount.csv'
 # normalizedDataset = dataCleanAndNormalize.dataCleanAndNormalize(filepath, True, "linnorm")
 #
-# pca = dimensionalityReduce(normalizedDataset, 'pca', False)
-# kpca = dimensionalityReduce(normalizedDataset, 'kpca', False)
-# tsne = dimensionalityReduce(normalizedDataset, 'tsne', False)
-# data_phate = dimensionalityReduce(normalizedDataset, 'phate', False)
-# print(pca[0].shape)
-# print(kpca[0].shape)
-# print(tsne[0].shape)
-# print(data_phate[0].shape)
+# res = dimensionalityReduce(normalizedDataset, 'pca')
+# print(res[0])
+# print(res[1])
+# print(res[2])
+# print(res[3])
