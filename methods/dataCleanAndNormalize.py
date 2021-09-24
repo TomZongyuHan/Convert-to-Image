@@ -116,9 +116,9 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
         for i in range(len(col_names)):
             name = col_names[i].split('.')
             if len(name)>1:
-                col_names[i] = name[:-1]
+                col_names[i] = ''.join([str(elem) for elem in name[:-1]])
             else:
-                col_names[i] = name
+                col_names[i] = name[0]
         normalized_dataset.columns = col_names
 
     # Return processed dataset
