@@ -22,7 +22,13 @@ def dimensionalityReduce(normalizedDataset, drName):
     # Transpose the dataset for dimensionality reduction
     # normalizedDatasetT = np.transpose(normalizedDataset)
     normalizedDatasetT = normalizedDataset.transpose()
-    labels = normalizedDataset.columns.values
+    labels = normalizedDatasetT.columns.tolist()
+    for i in range(len(labels)):
+        name = labels[i].split('.')
+        if len(name)>1:
+            labels[i] = ''.join([str(elem) for elem in name[:-1]])
+        else:
+            labels[i] = name[0]
 
     # Implement and run dimensionality reduction methods
     if drName == 'pca':
