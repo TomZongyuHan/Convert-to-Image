@@ -25,7 +25,6 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
         isRowCount = 'FALSE'
 
     # Prepare R variable
-    filepathpy = filepath
     filepath = '\"' + filepath + '\"'
     isRowCount = '\"' + isRowCount + '\"'
     normName = '\"' + normName + '\"'
@@ -45,13 +44,13 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     importr('scran')  # for scran
 
     robjects.r("""
-            # This function used to read, clean and normalize data
-            # Input:
-            #   path: data csv file path
-            #   normName: normalization method name, should be linnorm/scone/ttm/scran/cpm/seurat
-            # Rerutn:
-            #   processed data: rows - genes, columns - cells
-            processDataset <- function(path, isRowCount, normname) {
+        # This function used to read, clean and normalize data
+        # Input:
+        #   path: data csv file path
+        #   normName: normalization method name, should be linnorm/scone/ttm/scran/cpm/seurat
+        # Rerutn:
+        #   processed data: rows - genes, columns - cells
+        processDataset <- function(path, isRowCount, normname) {
             # Read the CSV file and convert it to matrix format
             rowdata <- read.table(path, sep = ",", header = FALSE)
             rowdata <- as.matrix(rowdata)
@@ -63,13 +62,20 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
             }
         
             # Delete the rows containing remove names
-            removeNames <- c("alpha.contaminated", "beta.contaminated", "delta.contaminated", "Excluded", "gamma.contaminated", "miss", "NA","not applicable", "unclassified", "unknown", "Unknown", "zothers")
+            removeNames <- c("alpha.contaminated", "beta.contaminated", "delta.contaminated", "Excluded", "gamma.contaminated", "miss", "NA","not applicable", "unclassified", "unknown", "Unknown", "zothers","NaN")
             for (name in removeNames) {
                 rowdata <- rowdata[!grepl(name, rowdata[, 1]), ]
             }
-        
-            # Discard first row and first column (row name, column name)
-            rowdata <- rowdata[-1, -1]
+            rowdata <- na.omit(rowdata)  
+            
+            # Discard first row (row name)
+            rowdata <- rowdata[-1,]
+            
+            # Save row name
+            colName = rowdata[,1]
+            
+            # Discard first column (column name)
+            rowdata <- rowdata[, -1]
         
             # Convert character data in the matrix to double data using the mode() method
             mode(rowdata) <- "double"
@@ -94,8 +100,11 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
             } else if (normname == "seurat") {
                 rowdata <- as.matrix(NormalizeData(rowdata))
             } 
-
-            return(rowdata)
+            
+            # Save 2 objects in a list
+            res_list <- list("data" = rowdata, "names" = colName)
+            
+            return(res_list)
         }
     """)
 
@@ -103,26 +112,16 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
         res = processDataset(path, isRowCount, normname)
     """)
 
-    dataframe = robjects.reval("res")
+    dataframe = robjects.reval("res")[0]
+    colName = robjects.reval("res")[1]
     # normalized_dataset = np.array(dataframe)
     with localconverter(robjects.default_converter + pandas2ri.converter):
         normalized_dataset = pd.DataFrame(data=robjects.conversion.rpy2py(dataframe))
-
-    # Add columns name to dataframe
-    if isRowCount == 'TRUE':
-        normalized_dataset.columns = pd.read_csv(filepathpy, header=0, index_col=0).index
-    else:
-        col_names = pd.read_csv(filepathpy, header=0, index_col=0).columns.tolist()
-        for i in range(len(col_names)):
-            name = col_names[i].split('.')
-            if len(name)>1:
-                col_names[i] = ''.join([str(elem) for elem in name[:-1]])
-            else:
-                col_names[i] = name[0]
-        normalized_dataset.columns = col_names
+    normalized_dataset.columns = colName
 
     # Return processed dataset
     return normalized_dataset
+
 # Test
 # filepath = '../originalDatasets/' + 'test-RowCount.csv'
 # normalized_dataset = dataCleanAndNormalize(filepath, True, "linnorm")
