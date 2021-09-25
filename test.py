@@ -30,7 +30,10 @@ def test(filename, isRowCount):
     drNames = ['pca', 'kpca', 'tsne', 'phate']
     icNames = ['deepinsight', 'cpcr', 'gaf']
     CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
-    accNames = ['acc', 'f1_macro', 'f1_micro', 'f1_weighted', 'precision', 'recall']
+    accNames = ['acc']
+    normNum = len(drNames) * len(icNames) * len(CNNNames) * len(accNames)
+    drNum = len(icNames) * len(CNNNames) * len(accNames)
+    icNum = len(CNNNames) * len(accNames)
     allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames) * len(accNames)  # calculate how many methods exist
 
     # Handle the results file, skip completed method
@@ -44,7 +47,7 @@ def test(filename, isRowCount):
     for normName in normNames:
         # The finishNum + 359 is last method line of this normalization
         # Check if need to skip one normalization method
-        rst = checkSkipMethod('norm', finishNum + 359, test_results, [filepath, isRowCount, normName])
+        rst = checkSkipMethod('norm', finishNum + normNum - 1, test_results, [filepath, isRowCount, normName])
         if isinstance(rst, int):
             finishNum = rst + 1
             continue
@@ -52,7 +55,7 @@ def test(filename, isRowCount):
             normalizedDataset = rst
         for drName in drNames:
             # Check if need to skip one dimensionality reduce method
-            rst = checkSkipMethod('dr', finishNum + 89, test_results, [normalizedDataset, drName])
+            rst = checkSkipMethod('dr', finishNum + drNum - 1, test_results, [normalizedDataset, drName])
             if isinstance(rst, int):
                 finishNum = rst + 1
                 continue
@@ -60,7 +63,7 @@ def test(filename, isRowCount):
                 drResult = rst
             for icName in icNames:
                 # Check if need to skip one image convert method
-                rst = checkSkipMethod('ic', finishNum + 29, test_results, [drResult, icName])
+                rst = checkSkipMethod('ic', finishNum + icNum - 1, test_results, [drResult, icName])
                 if isinstance(rst, int):
                     finishNum = rst + 1
                     continue
@@ -68,15 +71,17 @@ def test(filename, isRowCount):
                     augmentedDataset = rst
                 for CNNName in CNNNames:
                     # Check if need to skip one cnn method
-                    rst = checkSkipMethod('cnn', finishNum + 5, test_results, [augmentedDataset, CNNName])
-                    if isinstance(rst, int):
-                        finishNum = rst + 1
-                        continue
-                    else:
-                        results = rst
+                    # rst = checkSkipMethod('cnn', finishNum + 5, test_results, [augmentedDataset, CNNName])
+                    results = CNNTrain(augmentedDataset, CNNName)  # CNN train
+                    # if isinstance(rst, int):
+                    #     finishNum = rst + 1
+                    #     continue
+                    # else:
+                    #     results = rst
                     for accName in accNames:
                         methodName = normName + '-' + drName + '-' + icName + '-' + CNNName + '-' + accName
                         accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
+                        print(accuracy)
                         # Save the result in results/accuracies
                         test_results[finishNum] = accuracy
                         np.save('results/accuracies/testResults.npy', test_results)
@@ -141,5 +146,5 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
 
 
 # Please use the file name that you want to process e.g. yan-rowCount.csv
-filename = '.csv'
-test(filename, True)
+filename = 'deng-reads.csv'
+test(filename, False)
