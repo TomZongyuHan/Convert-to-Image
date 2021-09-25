@@ -54,13 +54,13 @@ def imageConvert(drResult, icName):
 def deepinsight(drName, dataset):
     # Implement and run dimensionality reduction methods
     if drName == 'pca':
-        drMethod = PCA(n_components=2)
+        drMethod = PCA(n_components=None)
     elif drName == 'kpca':
-        drMethod = KernelPCA(n_components=2, kernel='sigmoid')
+        drMethod = KernelPCA(n_components=None, kernel='sigmoid')
     elif drName == 'tsne':
-        drMethod = TSNE(n_components=2, n_jobs=-1)
+        drMethod = TSNE(n_components=None, n_jobs=-1)
     elif drName == 'phate':
-        drMethod = phate.PHATE(n_components=2)
+        drMethod = phate.PHATE(n_components=None)
     else:
         print("????? Please enter a correct normalize name ?????")
     

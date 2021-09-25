@@ -38,6 +38,12 @@ def CNNTrain(augmentedDataset, CNNName):
     # Run model to evaluate test data
     testResult, testLabel = evaluateData(model, testloader)
 
+    trainResult, trainLable = evaluateData(model, trainloader)
+    accuracy = accuracy_score(trainResult, trainLable)
+    print('!!!!!!!!!!!!!!!!')
+    print(accuracy)
+    print('!!!!!!!!!!!!!!!!')
+
     return [testResult, testLabel]
 
 
@@ -49,16 +55,9 @@ def loadDataset(augmentedDataset, CNNName, device):
     y_test = augmentedDataset[3]
 
     # Set preprocess transforms
-    if CNNName == 'alexnet':
-        # Only alexnet neet to resize the image to 224x224
-        preprocess = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Resize(224)
-        ])
-    else:
-        preprocess = transforms.Compose([
-            transforms.ToTensor()
-        ])
+    preprocess = transforms.Compose([
+        transforms.ToTensor()
+    ])
 
     # Encode the y train dataset
     le = LabelEncoder()
@@ -109,8 +108,11 @@ def trainModel(model, trainloader):
     optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
 
     # Run training use the epoch num
-    epochNum = 300
+    accuracy = 0
+    epochNum = 600
     for epoch in range(epochNum):
+        print(epoch)
+    #while True:
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
@@ -124,8 +126,15 @@ def trainModel(model, trainloader):
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
-
             running_loss += loss.item()
+        #     predicted = torch.argmax(outputs, 1)
+        #     epoch += 1
+        #     accuracy = accuracy_score(predicted.cpu().numpy(), labels.cpu().numpy())
+        #     print(str(epoch) + ': ' + str(accuracy))
+        # if accuracy > 0.95:
+        #     break
+    
+    # print(accuracy)
         # # print epoch statistics
         # print('[%d] loss: %.3f' %
         #       (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
