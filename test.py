@@ -28,7 +28,7 @@ def test(filename, isRowCount):
     # Set all methods need to be test
     normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
     drNames = ['pca', 'kpca', 'tsne', 'phate']
-    icNames = ['deepinsight', 'cpcr', 'gaf']
+    icNames = ['cpcr', 'gaf']
     CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
     accNames = ['acc']
     normNum = len(drNames) * len(icNames) * len(CNNNames) * len(accNames)
@@ -38,9 +38,11 @@ def test(filename, isRowCount):
 
     # Handle the results file, skip completed method
     try:
-        test_results = np.array(np.load('results/accuracies/testResults.npy', allow_pickle = True))
+        test_results = np.reshape(np.load('results/accuracies/testResults.npy', allow_pickle = True), (2,-1)).transpose()[:,0]
+        train_results = np.reshape(np.load('results/accuracies/testResults.npy', allow_pickle = True), (2,-1)).transpose()[:,1]
     except IOError:
         test_results = np.zeros((allNum, 1), dtype = np.float64) # allNum should be 2160
+        train_results = np.zeros((allNum, 1), dtype = np.float64) # allNum should be 2160
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
@@ -81,16 +83,19 @@ def test(filename, isRowCount):
                     for accName in accNames:
                         methodName = normName + '-' + drName + '-' + icName + '-' + CNNName + '-' + accName
                         accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
-                        print(accuracy)
+
                         # Save the result in results/accuracies
                         test_results[finishNum] = accuracy
-                        np.save('results/accuracies/testResults.npy', test_results)
+                        train_results[finishNum] = results[2]
+                        np.save('results/accuracies/testResults.npy', [test_results, train_results])
 
                         # Print method name and finish num at terminal
                         finishNum += 1
                         print('----- ' +
-                            methodName + ' finish ' +
-                            str(finishNum) + '/' + str(allNum))     
+                              methodName + ' finish ' +
+                              str(finishNum) + '/' + str(allNum) +
+                              ' testset accuracy:' + str(accuracy) +
+                              ' trainset accuracy:' + str(results[2]))
 
 
 # Check if skip this method and call the method
@@ -146,5 +151,5 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
 
 
 # Please use the file name that you want to process e.g. yan-rowCount.csv
-filename = 'deng-reads.csv'
-test(filename, False)
+filename = 'TabulaMuris_Thymus_10X-RowCount.csv'
+test(filename, True)
