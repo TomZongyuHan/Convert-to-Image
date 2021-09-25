@@ -2,6 +2,10 @@
 from sklearn.model_selection import train_test_split
 from pyDeepInsight import ImageTransformer, LogScaler
 from sklearn import preprocessing
+from sklearn.decomposition import PCA
+from sklearn.decomposition import KernelPCA
+from sklearn.manifold import TSNE
+import phate
 from pyts.image import GramianAngularField
 import numpy as np
 import cv2
@@ -47,7 +51,19 @@ def imageConvert(drResult, icName):
 #   dataset: the dataset after clean and normalize but not dr
 # Output:
 #   Refer to imageConvert()
-def deepinsight(drMethod, dataset):
+def deepinsight(drName, dataset):
+    # Implement and run dimensionality reduction methods
+    if drName == 'pca':
+        drMethod = PCA(n_components=2)
+    elif drName == 'kpca':
+        drMethod = KernelPCA(n_components=2, kernel='sigmoid')
+    elif drName == 'tsne':
+        drMethod = TSNE(n_components=2, n_jobs=-1)
+    elif drName == 'phate':
+        drMethod = phate.PHATE(n_components=2)
+    else:
+        print("????? Please enter a correct normalize name ?????")
+    
     # Divide dataset
     datas = dataset.values.transpose()
     labels = dataset.columns.values
@@ -61,8 +77,7 @@ def deepinsight(drMethod, dataset):
 
     # Implement method, Deepinsight need given drmethod
     it = ImageTransformer(feature_extractor=drMethod,
-        pixels=128, random_state=1701, 
-        n_jobs=-1)
+        pixels=128, random_state=1701, n_jobs=-1)
 
     # Train and get image data
     X_train_img = it.fit_transform(X_train_norm).transpose(0, 3, 1, 2)

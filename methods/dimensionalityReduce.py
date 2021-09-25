@@ -32,16 +32,16 @@ def dimensionalityReduce(normalizedDataset, drName):
 
     # Implement and run dimensionality reduction methods
     if drName == 'pca':
-        drMethod = PCA(n_components=2)
-        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
+        drMethod = PCA(n_components=0.95)
+        drDatasetT = PCA(n_components=0.95).fit_transform(normalizedDatasetT.values)
     elif drName == 'kpca':
-        drMethod = KernelPCA(n_components=2, kernel='sigmoid')
+        drMethod = KernelPCA(n_components=0.95, kernel='sigmoid')
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'tsne':
-        drMethod = TSNE(n_components=2, n_jobs=-1)
+        drMethod = TSNE(n_components=0.95, n_jobs=-1)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'phate':
-        drMethod = phate.PHATE()
+        drMethod = phate.PHATE(n_components=0.95)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     else:
         print("????? Please enter a correct normalize name ?????")
@@ -51,7 +51,7 @@ def dimensionalityReduce(normalizedDataset, drName):
     drDataset = drDatasetT.transpose()
 
     # Return the result
-    return [drMethod, normalizedDataset, drDataset, labels]
+    return [drName, normalizedDataset, drDataset, labels]
 
 
 # Test

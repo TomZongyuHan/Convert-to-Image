@@ -7,6 +7,7 @@ from torch.utils.data import TensorDataset, DataLoader
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
 import warnings
 
 
@@ -51,7 +52,7 @@ def loadDataset(augmentedDataset, CNNName, device):
     if CNNName == 'alexnet':
         # Only alexnet neet to resize the image to 224x224
         preprocess = transforms.Compose([
-            transforms.ToTensor(), 
+            transforms.ToTensor(),
             transforms.Resize(224)
         ])
     else:
@@ -70,7 +71,7 @@ def loadDataset(augmentedDataset, CNNName, device):
     y_test = torch.from_numpy(le.transform(y_test)).to(device)
 
     # Set the batch size and put dataset into dataloader
-    batch_size = 10
+    batch_size = 256
     trainloader = DataLoader(TensorDataset(X_train_img, y_train), batch_size=batch_size, shuffle=True)
     testloader = DataLoader(TensorDataset(X_test_img, y_test), batch_size=batch_size, shuffle=True)
 
@@ -84,7 +85,7 @@ def getModel(CNNName, num_classes):
     else:
         if CNNName == 'alexnet':
             model = torch.hub.load('pytorch/vision:v0.9.0', 'alexnet', pretrained=False, verbose=False)
-            model.fc = nn.Linear(4096, num_classes)
+            model.classifier[6] = nn.Linear(4096, num_classes)
         elif CNNName == 'vgg16':
             model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=False, verbose=False)
             model.classifier[6] = nn.Linear(4096, num_classes)
@@ -134,6 +135,7 @@ def trainModel(model, trainloader):
 
 def evaluateData(model, testloader):
     model.eval()
+    outputs = []
     with torch.no_grad():
         results = []
         trueLabels = []
@@ -141,8 +143,8 @@ def evaluateData(model, testloader):
             inputs, labels = data
             # forward + backward + optimize
             outputs = model(inputs)
-            _, train_predicted = torch.max(outputs, 1)
-            results.append(train_predicted.cpu().numpy())
+            test_predicted = torch.argmax(outputs, 1)
+            results.append(test_predicted.cpu().numpy())
             trueLabels.append(labels.cpu().numpy())
     testResult = [b for a in results for b in a]
     testLabel = [b for a in trueLabels for b in a]

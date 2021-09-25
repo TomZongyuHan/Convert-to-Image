@@ -96,7 +96,7 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
             } else if (normname == "scone") {
                 rowdata <- DESEQ_FN(rowdata)
             } else if (normname == "cpm") {
-                rowdata <- cpm(rowdata, log=FALSE)
+                rowdata <- edgeR::cpm(rowdata, log=FALSE)
             } else if (normname == "seurat") {
                 rowdata <- as.matrix(NormalizeData(rowdata))
             } 
