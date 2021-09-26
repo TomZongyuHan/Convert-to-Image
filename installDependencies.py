@@ -18,7 +18,8 @@ def installPythonDeps():
         'tensorflow',
         'torch',
         'torchvision',
-        'scikit-image'
+        'scikit-image',
+        'tqdm'
     ]
 
     # For loop to install all packages

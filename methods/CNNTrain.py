@@ -9,6 +9,7 @@ import torch.optim as optim
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 import warnings
+from tqdm import tqdm
 
 
 # Transfer non-image data to image dataset
@@ -39,12 +40,12 @@ def CNNTrain(augmentedDataset, CNNName):
     testResult, testLabel = evaluateData(model, testloader)
 
     trainResult, trainLable = evaluateData(model, trainloader)
-    accuracy = accuracy_score(trainResult, trainLable)
-    print('!!!!!!!!!!!!!!!!')
-    print(accuracy)
-    print('!!!!!!!!!!!!!!!!')
+    train_accuracy = accuracy_score(trainResult, trainLable)
+    # print('!!!!!!!!!!!!!!!!')
+    # print(train_accuracy)
+    # print('!!!!!!!!!!!!!!!!')
 
-    return [testResult, testLabel]
+    return [testResult, testLabel, train_accuracy]
 
 
 def loadDataset(augmentedDataset, CNNName, device):
@@ -110,8 +111,7 @@ def trainModel(model, trainloader):
     # Run training use the epoch num
     accuracy = 0
     epochNum = 600
-    for epoch in range(epochNum):
-        print(epoch)
+    for epoch in tqdm(range(epochNum)):
     #while True:
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
