@@ -40,6 +40,7 @@ def test(filename, isRowCount):
     normNum = len(drNames) * len(icNames) * len(CNNNames) * len(accNames)
     drNum = len(icNames) * len(CNNNames) * len(accNames)
     icNum = len(CNNNames) * len(accNames)
+    cnnNum = len(accNames)
     allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames) * len(accNames)  # calculate how many methods exist
 
     # Handle the results file, skip completed method
@@ -79,17 +80,15 @@ def test(filename, isRowCount):
                     augmentedDataset = rst
                 for CNNName in CNNNames:
                     # Check if need to skip one cnn method
-                    # rst = checkSkipMethod('cnn', finishNum + 5, test_results, [augmentedDataset, CNNName])
-                    results = CNNTrain(augmentedDataset, CNNName)  # CNN train
-                    # if isinstance(rst, int):
-                    #     finishNum = rst + 1
-                    #     continue
-                    # else:
-                    #     results = rst
+                    rst = checkSkipMethod('cnn', finishNum + cnnNum - 1, test_results, [augmentedDataset, CNNName])
+                    if isinstance(rst, int):
+                        finishNum = rst + 1
+                        continue
+                    else:
+                        results = rst
                     for accName in accNames:
                         methodName = normName + '-' + drName + '-' + icName + '-' + CNNName + '-' + accName
                         accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
-
                         # Save the result in results/accuracies
                         test_results[finishNum] = accuracy
                         train_results[finishNum] = results[2]
