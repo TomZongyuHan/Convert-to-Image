@@ -121,7 +121,6 @@ def trainModel(model, trainloader):
             running_loss += loss.item()
         
         results, labels = evaluateData(model, trainloader)
-        print(results)
         accuracy = accuracy_score(results, labels)
         epoch += 1
         # print(str(epoch) + ': ' + str(accuracy))
