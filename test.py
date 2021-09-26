@@ -28,8 +28,8 @@ def test(filename, isRowCount):
     # Set all methods need to be test
     normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
     drNames = ['pca', 'kpca', 'tsne', 'phate']
-    icNames = ['cpcr', 'gaf']
-    CNNNames = ['alexnet', 'vgg16', 'squeezenet', 'resnet', 'densenet']
+    icNames = ['deepinsight', 'cpcr', 'gaf']
+    CNNNames = ['alexnet', 'vgg16', 'squeezenet1_1', 'resnet50', 'densenet121']
     accNames = ['acc']
     normNum = len(drNames) * len(icNames) * len(CNNNames) * len(accNames)
     drNum = len(icNames) * len(CNNNames) * len(accNames)
@@ -151,5 +151,5 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
 
 
 # Please use the file name that you want to process e.g. yan-rowCount.csv
-filename = 'TabulaMuris_Thymus_10X-RowCount.csv'
-test(filename, True)
+filename = 'deng-reads.csv'
+test(filename, False)

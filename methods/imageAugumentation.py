@@ -42,7 +42,7 @@ def imageAugumentation(imageDataset):
 
     # 0 -> x train dataset, 1 -> x test dataset, 2 -> y train dataset, 3 -> y test dataset
     augmentedDataset = [augmentedXTrainDataset, newXTestDataset, newYTrainDataset , newYTestDataset]
-    np.save('111.npy', augmentedXTrainDataset)
+    # np.save('111.npy', augmentedXTrainDataset)
     return augmentedDataset
 
 # Use random methods to enhance image data
