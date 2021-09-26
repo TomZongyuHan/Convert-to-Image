@@ -41,9 +41,6 @@ def CNNTrain(augmentedDataset, CNNName):
 
     trainResult, trainLable = evaluateData(model, trainloader)
     train_accuracy = accuracy_score(trainResult, trainLable)
-    # print('!!!!!!!!!!!!!!!!')
-    # print(train_accuracy)
-    # print('!!!!!!!!!!!!!!!!')
 
     return [testResult, testLabel, train_accuracy]
 
@@ -57,7 +54,8 @@ def loadDataset(augmentedDataset, CNNName, device):
 
     # Set preprocess transforms
     preprocess = transforms.Compose([
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Resize(224)
     ])
 
     # Encode the y train dataset
@@ -71,7 +69,7 @@ def loadDataset(augmentedDataset, CNNName, device):
     y_test = torch.from_numpy(le.transform(y_test)).to(device)
 
     # Set the batch size and put dataset into dataloader
-    batch_size = 256
+    batch_size = 32
     trainloader = DataLoader(TensorDataset(X_train_img, y_train), batch_size=batch_size, shuffle=True)
     testloader = DataLoader(TensorDataset(X_test_img, y_test), batch_size=batch_size, shuffle=True)
 
@@ -79,40 +77,37 @@ def loadDataset(augmentedDataset, CNNName, device):
 
 
 def getModel(CNNName, num_classes):
+    # Get the model
     modelPath = 'cnnModels/' + CNNName + '.pt'
     if os.path.exists(modelPath):
         model = torch.load(modelPath)
     else:
-        if CNNName == 'alexnet':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'alexnet', pretrained=False, verbose=False)
-            model.classifier[6] = nn.Linear(4096, num_classes)
-        elif CNNName == 'vgg16':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=False, verbose=False)
-            model.classifier[6] = nn.Linear(4096, num_classes)
-        elif CNNName == 'squeezenet':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'squeezenet1_1', pretrained=False, verbose=False)
-            model.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1))
-        elif CNNName == 'resnet':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'resnet50', pretrained=False, verbose=False)
-            model.fc = nn.Linear(2048, num_classes)
-        elif CNNName == 'densenet':
-            model = torch.hub.load('pytorch/vision:v0.9.0', 'densenet121', pretrained=False, verbose=False)
-            model.fc = nn.Linear(18085, num_classes)
+        model = torch.hub.load('pytorch/vision:v0.10.0', CNNName, pretrained=True, verbose=False)
         torch.save(model, modelPath)
     
+    # Set model params
+    if CNNName == 'alexnet':
+        model.classifier[6] = nn.Linear(4096, num_classes)
+    elif CNNName == 'vgg16':
+        model.classifier[6] = nn.Linear(4096, num_classes)
+    elif CNNName == 'squeezenet1_1':
+        model.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1))
+    elif CNNName == 'resnet50':
+        model.fc = nn.Linear(2048, num_classes)
+    elif CNNName == 'densenet121':
+        model.classifier = nn.Linear(1024, num_classes)
+    
     return model
-
 
 def trainModel(model, trainloader):
     # Set criterion and optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
+    optimizer = optim.SGD(model.parameters(), lr=1e-4)
 
     # Run training use the epoch num
-    accuracy = 0
-    epochNum = 600
-    for epoch in tqdm(range(epochNum)):
-    #while True:
+    epochMaxNum = 800
+    for epoch in tqdm(range(epochMaxNum)):
+        model.train()
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
@@ -127,17 +122,13 @@ def trainModel(model, trainloader):
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
-        #     predicted = torch.argmax(outputs, 1)
-        #     epoch += 1
-        #     accuracy = accuracy_score(predicted.cpu().numpy(), labels.cpu().numpy())
-        #     print(str(epoch) + ': ' + str(accuracy))
-        # if accuracy > 0.95:
-        #     break
-    
-    # print(accuracy)
-        # # print epoch statistics
-        # print('[%d] loss: %.3f' %
-        #       (epoch + 1, running_loss / len(X_train_tensor) * batch_size))
+        
+        results, labels = evaluateData(model, trainloader)
+        accuracy = accuracy_score(results, labels)
+        epoch += 1
+        # tqdm.write(str(epoch) + ': ' + str(accuracy) + '\r')
+        if epoch > 60 and accuracy > 0.95:
+            break
     
     return model
 
@@ -159,9 +150,3 @@ def evaluateData(model, testloader):
     testLabel = [b for a in trueLabels for b in a]
 
     return testResult, testLabel
-
-
-# # test CNNTrain
-# x = CNNTrain(1, "vgg16")
-# x = np.array(x)
-# np.save('test_Ariel.npy', x)

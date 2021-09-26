@@ -28,8 +28,16 @@ def imageConvert(drResult, icName):
     # print("Image converting......")
     # Run image convert methods
     if icName == 'deepinsight':
-        drMethod = drResult[0]
+        drName = drResult[0]
         dataset = drResult[1]
+        if drName == 'pca':
+            drMethod = PCA(n_components=2)
+        elif drName == 'kpca':
+            drMethod = KernelPCA(n_components=2, kernel='cosine', n_jobs=-1)
+        elif drName == 'tsne':
+            drMethod = TSNE(n_components=2, n_jobs=-1)
+        elif drName == 'phate':
+            drMethod = phate.PHATE(n_components=2)
         imageDataset = deepinsight(drMethod, dataset)
     elif icName == 'cpcr':
         dataset = drResult[2]
@@ -51,18 +59,18 @@ def imageConvert(drResult, icName):
 #   dataset: the dataset after clean and normalize but not dr
 # Output:
 #   Refer to imageConvert()
-def deepinsight(drName, dataset):
-    # Implement and run dimensionality reduction methods
-    if drName == 'pca':
-        drMethod = PCA(n_components=None)
-    elif drName == 'kpca':
-        drMethod = KernelPCA(n_components=None, kernel='sigmoid')
-    elif drName == 'tsne':
-        drMethod = TSNE(n_components=None, n_jobs=-1)
-    elif drName == 'phate':
-        drMethod = phate.PHATE(n_components=None)
-    else:
-        print("????? Please enter a correct normalize name ?????")
+def deepinsight(drMethod, dataset):
+    # # Implement and run dimensionality reduction methods
+    # if drName == 'pca':
+    #     drMethod = PCA(n_components=None)
+    # elif drName == 'kpca':
+    #     drMethod = KernelPCA(n_components=None, kernel='sigmoid')
+    # elif drName == 'tsne':
+    #     drMethod = TSNE(n_components=None, n_jobs=-1)
+    # elif drName == 'phate':
+    #     drMethod = phate.PHATE(n_components=None)
+    # else:
+    #     print("????? Please enter a correct normalize name ?????")
     
     # Divide dataset
     datas = dataset.values.transpose()
@@ -77,7 +85,7 @@ def deepinsight(drName, dataset):
 
     # Implement method, Deepinsight need given drmethod
     it = ImageTransformer(feature_extractor=drMethod,
-        pixels=128, random_state=1701, n_jobs=-1)
+        pixels=128, random_state=1701)
 
     # Train and get image data
     X_train_img = it.fit_transform(X_train_norm).transpose(0, 3, 1, 2)

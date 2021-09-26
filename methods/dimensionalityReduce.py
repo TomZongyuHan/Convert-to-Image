@@ -35,7 +35,7 @@ def dimensionalityReduce(normalizedDataset, drName):
         drMethod = PCA(n_components=None)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'kpca':
-        drMethod = KernelPCA(n_components=None, kernel='cosine')
+        drMethod = KernelPCA(n_components=None, kernel='cosine', n_jobs=-1)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'tsne':
         drMethod = TSNE(n_components=None, n_jobs=-1)
