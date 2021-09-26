@@ -2,6 +2,8 @@
 # Import library and methods
 import sys
 sys.path.append('./methods/')
+import warnings
+import os
 from dataCleanAndNormalize import dataCleanAndNormalize
 from dimensionalityReduce import dimensionalityReduce
 from imageConvert import imageConvert
@@ -22,6 +24,10 @@ import pandas as pd
 # Output:
 #   result files will be showed in commond line
 def test(filename, isRowCount):
+    # Ignore warnings
+    warnings.filterwarnings('ignore')
+    os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
     # Set file path
     filepath = 'originalDatasets/' + filename
 
@@ -29,7 +35,7 @@ def test(filename, isRowCount):
     normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
     drNames = ['pca', 'kpca', 'tsne', 'phate']
     icNames = ['deepinsight', 'cpcr', 'gaf']
-    CNNNames = ['alexnet', 'vgg16', 'squeezenet1_1', 'resnet50', 'densenet121']
+    CNNNames = ['alexnet', 'vgg11', 'squeezenet1_1', 'resnet18', 'densenet121']
     accNames = ['acc']
     normNum = len(drNames) * len(icNames) * len(CNNNames) * len(accNames)
     drNum = len(icNames) * len(CNNNames) * len(accNames)

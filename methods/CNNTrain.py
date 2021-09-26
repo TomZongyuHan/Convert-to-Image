@@ -8,7 +8,6 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
-import warnings
 from tqdm import tqdm
 
 
@@ -20,8 +19,6 @@ from tqdm import tqdm
 #   result: the list of CNN train result
 def CNNTrain(augmentedDataset, CNNName):
     # print("Training......")
-    # Ignore warnings and set import config 
-    warnings.simplefilter('ignore')
     torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
 
     # Check if can use cuda to run cnn train
@@ -88,12 +85,12 @@ def getModel(CNNName, num_classes):
     # Set model params
     if CNNName == 'alexnet':
         model.classifier[6] = nn.Linear(4096, num_classes)
-    elif CNNName == 'vgg16':
+    elif CNNName == 'vgg11':
         model.classifier[6] = nn.Linear(4096, num_classes)
     elif CNNName == 'squeezenet1_1':
         model.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1))
-    elif CNNName == 'resnet50':
-        model.fc = nn.Linear(2048, num_classes)
+    elif CNNName == 'resnet18':
+        model.fc = nn.Linear(512, num_classes)
     elif CNNName == 'densenet121':
         model.classifier = nn.Linear(1024, num_classes)
     
@@ -124,9 +121,10 @@ def trainModel(model, trainloader):
             running_loss += loss.item()
         
         results, labels = evaluateData(model, trainloader)
+        print(results)
         accuracy = accuracy_score(results, labels)
         epoch += 1
-        # tqdm.write(str(epoch) + ': ' + str(accuracy) + '\r')
+        # print(str(epoch) + ': ' + str(accuracy))
         if epoch > 60 and accuracy > 0.95:
             break
     
