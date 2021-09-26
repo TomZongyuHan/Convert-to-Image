@@ -124,8 +124,7 @@ def trainModel(model, trainloader):
         print(results)
         accuracy = accuracy_score(results, labels)
         epoch += 1
-        print(str(epoch) + ': ' + str(accuracy))
-        # tqdm.write(str(epoch) + ': ' + str(accuracy) + '\r')
+        # print(str(epoch) + ': ' + str(accuracy))
         if epoch > 60 and accuracy > 0.95:
             break
     
