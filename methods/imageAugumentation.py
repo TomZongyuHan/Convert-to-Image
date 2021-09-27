@@ -52,7 +52,7 @@ def imageAugumentation(imageDataset):
 #   npImage: augmented data -> (128, 128)
 def random_aug(npImage):
     # generate a random int
-    op = np.random.randint(1, 7)
+    op = np.random.randint(1, 5)
     # crop
     if (op == 1):
         npImage = crop(npImage, 100, 100)
@@ -62,15 +62,9 @@ def random_aug(npImage):
     # zoom
     if (op == 3):
         npImage = zoom(npImage, 100, 100, 2)
-    # gauss_noise
-    if (op == 4):
-        npImage = gasuss_noise(npImage, 0, 0.005)
     # brightness
-    if (op == 5):
+    if (op == 4):
         npImage = change_brightness(npImage)
-    # shift
-    if (op == 6):
-        npImage = shift(npImage)
     return npImage
 
 # Crop the picture
