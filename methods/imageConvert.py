@@ -37,7 +37,7 @@ def imageConvert(drResult, icName):
         elif drName == 'tsne':
             drMethod = TSNE(n_components=2, n_jobs=-1)
         elif drName == 'phate':
-            drMethod = phate.PHATE(n_components=2)
+            drMethod = phate.PHATE(n_components=2, n_jobs=-1)
         imageDataset = deepinsight(drMethod, dataset)
     elif icName == 'cpcr':
         dataset = drResult[2]

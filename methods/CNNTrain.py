@@ -99,7 +99,7 @@ def getModel(CNNName, num_classes):
 def trainModel(model, trainloader):
     # Set criterion and optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=1e-4)
+    optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
 
     # Run training use the epoch num
     epochMaxNum = 800
@@ -124,7 +124,7 @@ def trainModel(model, trainloader):
         accuracy = accuracy_score(results, labels)
         epoch += 1
         # print(str(epoch) + ': ' + str(accuracy))
-        if epoch > 60 and accuracy > 0.95:
+        if epoch > 10 and accuracy > 0.95:
             break
     
     return model

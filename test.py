@@ -156,5 +156,5 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
 
 
 # Please use the file name that you want to process e.g. yan-rowCount.csv
-filename = 'deng-reads.csv'
+filename = '.csv'
 test(filename, False)
