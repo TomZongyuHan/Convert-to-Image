@@ -66,7 +66,7 @@ def loadDataset(augmentedDataset, CNNName, device):
     y_test = torch.from_numpy(le.transform(y_test)).to(device)
 
     # Set the batch size and put dataset into dataloader
-    batch_size = 32
+    batch_size = 16
     trainloader = DataLoader(TensorDataset(X_train_img, y_train), batch_size=batch_size, shuffle=True)
     testloader = DataLoader(TensorDataset(X_test_img, y_test), batch_size=batch_size, shuffle=True)
 
