@@ -99,13 +99,14 @@ def getModel(CNNName, num_classes):
 def trainModel(model, trainloader):
     # Set criterion and optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=1e-4, momentum=0.9)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience = 60, threshold=0.01, factor=0.5)
 
     # Run training use the epoch num
-    epochMaxNum = 800
+    epochMaxNum = 600
     for epoch in tqdm(range(epochMaxNum)):
         model.train()
-        running_loss = 0.0
+        # running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
@@ -118,10 +119,11 @@ def trainModel(model, trainloader):
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
-            running_loss += loss.item()
+            # running_loss += loss.item()
         
         results, labels = evaluateData(model, trainloader)
         accuracy = accuracy_score(results, labels)
+        scheduler.step(accuracy) 
         epoch += 1
         # print(str(epoch) + ': ' + str(accuracy))
         if epoch > 10 and accuracy > 0.95:
@@ -132,7 +134,6 @@ def trainModel(model, trainloader):
 
 def evaluateData(model, testloader):
     model.eval()
-    outputs = []
     with torch.no_grad():
         results = []
         trueLabels = []
