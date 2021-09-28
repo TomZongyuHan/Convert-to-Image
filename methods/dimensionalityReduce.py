@@ -23,8 +23,9 @@ def dimensionalityReduce(normalizedDataset, drName):
     # normalizedDatasetT = np.transpose(normalizedDataset)
     normalizedDatasetT = normalizedDataset.transpose()
     labels = normalizedDataset.columns.tolist()
-    componentNum = min(len(labels), len(normalizedDatasetT.iloc[1])) - 1
-    
+    featureNum = len(labels)
+    sampleNum = len(normalizedDatasetT.iloc[1])
+    componentNum = int((min(featureNum, sampleNum) - 1) * 0.5)
     for i in range(len(labels)):
         name = labels[i].split('.')
         if len(name) > 1:
@@ -34,10 +35,10 @@ def dimensionalityReduce(normalizedDataset, drName):
 
     # Implement and run dimensionality reduction methods
     if drName == 'pca':
-        drMethod = PCA(n_components=None)
+        drMethod = PCA(n_components=componentNum)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'kpca':
-        drMethod = KernelPCA(n_components=None, kernel='cosine', n_jobs=-1)
+        drMethod = KernelPCA(n_components=componentNum, kernel='cosine', n_jobs=-1)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'tsne':
         drMethod = TSNE(n_components=componentNum, n_jobs=-1, method='exact')
@@ -49,8 +50,8 @@ def dimensionalityReduce(normalizedDataset, drName):
         print("????? Please enter a correct normalize name ?????")
 
     # Transpose the dataset for results
-    # drDataset = np.transpose(drDatasetT)
     drDataset = drDatasetT.transpose()
+    
 
     # Return the result
     return [drName, normalizedDataset, drDataset, labels]
