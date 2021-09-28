@@ -17,7 +17,7 @@ import pandas as pd
 # Output:
 #   normalizedDataset: the variable store normalized dataset
 def dataCleanAndNormalize(filepath, isRowCount, normName):
-    print("Normalizing......")
+    # print("Normalizing......")
     # Transform variable 'isRowCount' to String
     if (isRowCount):
         isRowCount = 'TRUE'
