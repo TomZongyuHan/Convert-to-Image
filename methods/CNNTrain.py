@@ -125,7 +125,6 @@ def trainModel(model, trainloader):
         accuracy = accuracy_score(results, labels)
         scheduler.step(accuracy) 
         epoch += 1
-        # print(str(epoch) + ': ' + str(accuracy))
         if epoch > 10 and accuracy > 0.95:
             break
     
