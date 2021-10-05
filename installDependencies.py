@@ -19,7 +19,8 @@ def installPythonDeps():
         'torch',
         'torchvision',
         'scikit-image',
-        'tqdm'
+        'tqdm',
+        'umap-learn'
     ]
 
     # For loop to install all packages
