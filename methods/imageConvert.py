@@ -47,6 +47,9 @@ def imageConvert(drResult, icName):
         dataset = drResult[2]
         labels = drResult[3]
         imageDataset = gaf(dataset, labels)
+    elif drName == 'umap':
+        drMethod = umap.UMAP(n_components=componentNum)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     else:
         print("????? Please enter a correct image convert method name ?????")
 
