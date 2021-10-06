@@ -143,7 +143,7 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames):
         for drName in drNames:
             for icName in icNames:
                 for CNNName in CNNNames:
-                    results = [normName, drName, icName, CNNName, resultsList[index][0][0], resultsList[index][0][1]]
+                    results = [normName, drName, icName, CNNName, resultsList[index][0], resultsList[index][1]]
                     newList.append(results)
                     index += 1
 
