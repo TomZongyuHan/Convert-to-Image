@@ -143,7 +143,7 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames):
         for drName in drNames:
             for icName in icNames:
                 for CNNName in CNNNames:
-                    results = [normName, drName, icName, CNNName, resultsList[index][0], resultsList[index][1]]
+                    results = [normName, drName, icName, CNNName, resultsList[index][1], resultsList[index][2]]
                     newList.append(results)
                     index += 1
 
@@ -155,5 +155,5 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames):
 
 
 # Please use the file name that you want to process e.g. yan-rowCount.csv
-filename = 'deng-reads.csv'
+filename = '.csv'
 test(filename, False)
