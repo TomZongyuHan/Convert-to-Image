@@ -45,7 +45,7 @@ def test(filename, isRowCount):
     try:
         test_results = np.load('results/accuracies/testResults.npy', allow_pickle = True)
     except IOError:
-        test_results = np.zeros((allNum, 3), dtype = np.float64) # allNum should be 2160
+        test_results = np.zeros((allNum, 4), dtype = np.float64) # allNum should be 2160
 
 
     # Run all methods and output results
@@ -90,6 +90,7 @@ def test(filename, isRowCount):
                     test_results[finishNum][0] = results[2]
                     test_results[finishNum][1] = accuracy[0]
                     test_results[finishNum][2] = accuracy[1]
+                    test_results[finishNum][3] = accuracy[2]
                     np.save('results/accuracies/testResults.npy', test_results)
 
                     # Print method name and finish num at terminal
@@ -143,12 +144,12 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames):
         for drName in drNames:
             for icName in icNames:
                 for CNNName in CNNNames:
-                    results = [normName, drName, icName, CNNName, resultsList[index][1], resultsList[index][2]]
+                    results = [normName, drName, icName, CNNName, resultsList[index][1], resultsList[index][2], resultsList[index][3]]
                     newList.append(results)
                     index += 1
 
     # Save the final result at csv file with descending sort
-    columnNames = ['normName', 'drName', 'icName', 'CNNName', 'accuracy', 'f1_score']
+    columnNames = ['normName', 'drName', 'icName', 'CNNName', 'accuracy', 'f1_score_weighted', 'f1_score_macro']
     df = pd.DataFrame(newList, columns = columnNames)
     df.sort_values(by = 'accuracy', ascending=False, inplace=True)
     df.to_csv('results/accuracies/testResults.csv', index = False)
