@@ -156,5 +156,5 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames):
 
 
 # Please use the file name that you want to process e.g. yan-rowCount.csv
-filename = '.csv'
-test(filename, False)
+filename = 'yan-RowCount.csv'
+test(filename, True)
