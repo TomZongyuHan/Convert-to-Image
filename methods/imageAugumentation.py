@@ -11,7 +11,6 @@ from skimage import transform
 # Output:
 #   augmentedDataset: the list of test set and train set
 def imageAugumentation(imageDataset):
-    # print("Image augumenting......")
     # Implement and run image enhance method
     # create two lists to store new img data
     newXTrainDataset = []
@@ -23,10 +22,6 @@ def imageAugumentation(imageDataset):
     newYTestDataset = imageDataset[3]
 
     for img in imageDataset[0]:
-        # 3d img -> 2d img
-        # if img.ndim == 3:
-        #     img = img[:, :, 0]
-        # 3 128 128
         newXTrainDataset.append(img)
 
     augmentedXTrainDataset = newXTrainDataset
@@ -42,7 +37,6 @@ def imageAugumentation(imageDataset):
 
     # 0 -> x train dataset, 1 -> x test dataset, 2 -> y train dataset, 3 -> y test dataset
     augmentedDataset = [augmentedXTrainDataset, newXTestDataset, newYTrainDataset , newYTestDataset]
-    # np.save('111.npy', augmentedXTrainDataset)
     return augmentedDataset
 
 # Use random methods to enhance image data
@@ -95,7 +89,6 @@ def crop(npImage, height_range, width_range):
 #   npImage: augmented data -> (128, 128)
 def zoom(npImage, height_range, width_range, magnification):
     _, height, width = npImage.shape
-    # npImage = cv2.resize(npImage, (int(height * 1.5), int(width * 1.5)))
     npImage = npImage[:, int((height - height_range) / magnification): int((height + height_range) / magnification),
               int((width - width_range) / magnification): int((width + width_range) / magnification)]
     npImage = transform.resize(npImage, (3, 128, 128))
@@ -117,24 +110,6 @@ def random_flip(npImage):
         npImage = np.flip(npImage, 1)
     return npImage
 
-# Add a noise layer to the picture
-# Input:
-#   npImage: numpy format -> (128, 128)
-#   mean: The mean
-#   var: The variance
-# Output:
-#   out: augmented data -> (128, 128)
-def gasuss_noise(npImage, mean = 0, var = 0.005):
-    # nomorlized the pixel value
-    npImage = np.array(npImage / 255, dtype=float)
-    # create a gasuss matrix
-    noise = np.random.normal(mean, var ** 0.5, npImage.shape)
-    # combine the image matrix with the gasuss matrix
-    out = npImage + noise
-    # Restores to the original pixel value
-    out = np.uint8(out * 255)
-    return out
-
 # change the brightness of numpy image
 # Input:
 #   npImage: numpy format -> (128, 128)
@@ -143,25 +118,3 @@ def gasuss_noise(npImage, mean = 0, var = 0.005):
 def change_brightness(npImage):
     npImage = tf.image.random_brightness(npImage, 0.5)
     return npImage
-
-# Image translation, Shift it 28 pixels to the right and 28 pixels down
-# Input:
-#   npImage: numpy format -> (128, 128)
-# Output:
-#   npImage: augmented data -> (128, 128)
-def shift(npImage):
-    npImage = npImage.transpose(1, 2, 0)
-    npImage = Image.fromarray(np.uint8(npImage))
-    npImage = ImageChops.offset(npImage, 28, 28)
-    npImage = np.array(npImage)
-    npImage = npImage.transpose(2, 0, 1)
-    return npImage
-
-# Test
-# imageDataset = np.load("../testnpy.npy", allow_pickle=True)
-# ([x train], [x test], [y train], [y test])
-# print(imageDataset[0].shape)
-# [[144, 3, 128, 128], [18, 3, 128, 128], [144,], [18]]
-# augmented_dataset = imageAugumentation(imageDataset)
-# print(augmented_dataset[1].shape)
-# npImage = npImage.transpose(0, 2, 3, 1) -> [144, 128, 128, 3]
