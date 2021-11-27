@@ -30,8 +30,9 @@ def CNNTrain(augmentedDataset, CNNName):
     # Import specific model online and put into device
     model = getModel(CNNName, num_classes).to(device)
 
-    # Train cnnModel
+    # Train and save cnnModel
     model = trainModel(model, trainloader)
+    saveModel(CNNName, model)
 
     # Run model to evaluate test data
     testResult, testLabel = evaluateData(model, testloader)
@@ -80,30 +81,37 @@ def getModel(CNNName, num_classes):
         model = torch.load(modelPath)
     else:
         model = torch.hub.load('pytorch/vision:v0.10.0', CNNName, pretrained=True, verbose=False)
-        torch.save(model, modelPath)
-    
-    # Set model params
-    if CNNName == 'alexnet':
-        model.classifier[6] = nn.Linear(4096, num_classes)
-    elif CNNName == 'vgg11':
-        model.classifier[6] = nn.Linear(4096, num_classes)
-    elif CNNName == 'squeezenet1_1':
-        model.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1))
-    elif CNNName == 'resnet18':
-        model.fc = nn.Linear(512, num_classes)
-    elif CNNName == 'densenet121':
-        model.classifier = nn.Linear(1024, num_classes)
+        
+        # Set model params
+        if CNNName == 'alexnet':
+            model.classifier[6] = nn.Linear(4096, num_classes)
+        elif CNNName == 'vgg11':
+            model.classifier[6] = nn.Linear(4096, num_classes)
+        elif CNNName == 'squeezenet1_1':
+            model.classifier[1] = nn.Conv2d(512, num_classes, kernel_size=(1, 1), stride=(1, 1))
+        elif CNNName == 'resnet18':
+            model.fc = nn.Linear(512, num_classes)
+        elif CNNName == 'densenet121':
+            model.classifier = nn.Linear(1024, num_classes)
     
     return model
+
+
+def saveModel(CNNName, model):
+    modelPath = 'cnnModels/' + CNNName + '.pt'
+    torch.save(model, modelPath)
+
 
 def trainModel(model, trainloader):
     # Set criterion and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience = 60, threshold=0.01, factor=0.5)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience = 30, threshold=0.01, factor=0.5)
 
     # Run training use the epoch num
-    epochMaxNum = 600
+    epochMaxNum = 300
+    prevAcc = 0
+    lowChangeNum = 0
     for epoch in tqdm(range(epochMaxNum)):
         model.train()
         # running_loss = 0.0
@@ -125,7 +133,16 @@ def trainModel(model, trainloader):
         accuracy = accuracy_score(results, labels)
         scheduler.step(accuracy) 
         epoch += 1
-        if epoch > 10 and accuracy > 0.95:
+
+        if prevAcc == 0:
+            prevAcc = accuracy
+        else:
+            difAcc = abs(accuracy - prevAcc)
+            if difAcc < 0.05:
+                lowChangeNum += 1
+
+        # print(str(epoch) + ': ' + str(accuracy) + ': ' + str(lowChangeNum))
+        if (epoch > 10 and accuracy > 0.95) or (lowChangeNum >= 35):
             break
     
     return model

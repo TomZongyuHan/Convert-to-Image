@@ -9,6 +9,7 @@ import phate
 from pyts.image import GramianAngularField
 import numpy as np
 import cv2
+import umap
 
 
 # Transfer non-image data to image dataset
@@ -38,6 +39,8 @@ def imageConvert(drResult, icName):
             drMethod = TSNE(n_components=2, n_jobs=-1)
         elif drName == 'phate':
             drMethod = phate.PHATE(n_components=2, n_jobs=-1)
+        elif drName == 'umap':
+            drMethod = umap.UMAP(n_components=2)
         imageDataset = deepinsight(drMethod, dataset)
     elif icName == 'cpcr':
         dataset = drResult[2]

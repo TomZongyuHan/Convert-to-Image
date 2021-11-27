@@ -33,23 +33,20 @@ def test(filename, isRowCount):
 
     # Set all methods need to be test
     normNames = ['linnorm', 'scran', 'tmm', 'scone', 'cpm', 'seurat']
-    drNames = ['pca', 'kpca', 'tsne', 'phate']
+    drNames = ['pca', 'kpca', 'tsne', 'phate', 'umap']
     icNames = ['deepinsight', 'cpcr', 'gaf']
     CNNNames = ['alexnet', 'vgg11', 'squeezenet1_1', 'resnet18', 'densenet121']
-    accNames = ['acc']
-    normNum = len(drNames) * len(icNames) * len(CNNNames) * len(accNames)
-    drNum = len(icNames) * len(CNNNames) * len(accNames)
-    icNum = len(CNNNames) * len(accNames)
-    cnnNum = len(accNames)
-    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames) * len(accNames)  # calculate how many methods exist
+    normNum = len(drNames) * len(icNames) * len(CNNNames)
+    drNum = len(icNames) * len(CNNNames)
+    icNum = len(CNNNames)
+    allNum = len(normNames) * len(drNames) * len(icNames) * len(CNNNames)  # calculate how many methods exist
 
     # Handle the results file, skip completed method
     try:
-        test_results = np.reshape(np.load('results/accuracies/testResults.npy', allow_pickle = True), (2,-1)).transpose()[:,0]
-        train_results = np.reshape(np.load('results/accuracies/testResults.npy', allow_pickle = True), (2,-1)).transpose()[:,1]
+        test_results = np.load('results/accuracies/testResults.npy', allow_pickle = True)
     except IOError:
-        test_results = np.zeros((allNum, 1), dtype = np.float64) # allNum should be 2160
-        train_results = np.zeros((allNum, 1), dtype = np.float64) # allNum should be 2160
+        test_results = np.zeros((allNum, 4), dtype = np.float64) # allNum should be 2160
+
 
     # Run all methods and output results
     finishNum = 0  # use a number to calculate how many method have finished
@@ -80,32 +77,36 @@ def test(filename, isRowCount):
                     augmentedDataset = rst
                 for CNNName in CNNNames:
                     # Check if need to skip one cnn method
-                    rst = checkSkipMethod('cnn', finishNum + cnnNum - 1, test_results, [augmentedDataset, CNNName])
+                    rst = checkSkipMethod('cnn', finishNum, test_results, [augmentedDataset, CNNName])
                     if isinstance(rst, int):
                         finishNum = rst + 1
                         continue
                     else:
                         results = rst
-                    for accName in accNames:
-                        methodName = normName + '-' + drName + '-' + icName + '-' + CNNName + '-' + accName
-                        accuracy = calculateAccuracy(results, accName)  # Calculate accuracy
-                        # Save the result in results/accuracies
-                        test_results[finishNum] = accuracy
-                        train_results[finishNum] = results[2]
-                        np.save('results/accuracies/testResults.npy', [test_results, train_results])
+                    
+                    methodName = normName + '-' + drName + '-' + icName + '-' + CNNName
+                    accuracy = calculateAccuracy(results)  # Calculate accuracy
+                    # Save the result in results/accuracies
+                    test_results[finishNum][0] = results[2]
+                    test_results[finishNum][1] = accuracy[0]
+                    test_results[finishNum][2] = accuracy[1]
+                    test_results[finishNum][3] = accuracy[2]
+                    np.save('results/accuracies/testResults.npy', test_results)
 
-                        # Print method name and finish num at terminal
-                        finishNum += 1
-                        print('----- ' +
-                              methodName + ' finish ' +
-                              str(finishNum) + '/' + str(allNum) +
-                              ' testset accuracy:' + str(accuracy) +
-                              ' trainset accuracy:' + str(results[2]))
+                    # Print method name and finish num at terminal
+                    finishNum += 1
+                    print('----- ' +
+                            methodName + ' finish ' +
+                            str(finishNum) + '/' + str(allNum) +
+                            ' testset accuracy:' + str(accuracy[0]) +
+                            ' trainset accuracy:' + str(results[2]))
+    
+    saveFinalResult(normNames, drNames, icNames, CNNNames)
 
 
 # Check if skip this method and call the method
 def checkSkipMethod(methodName, finishNum, test_results, params):
-    skipFlag = float(test_results[finishNum]) != float(0)
+    skipFlag = float(test_results[finishNum][0]) != float(0)
     if methodName == 'norm':
         if not skipFlag:
             # If return the result of method, do not need to skip
@@ -132,7 +133,7 @@ def checkSkipMethod(methodName, finishNum, test_results, params):
     return result
 
 
-def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
+def saveFinalResult(normNames, drNames, icNames, CNNNames):
     # Import result list from npy data
     resultsList = np.array(np.load('results/accuracies/testResults.npy', allow_pickle = True)).tolist()
 
@@ -143,13 +144,12 @@ def saveFinalResult(normNames, drNames, icNames, CNNNames, accNames):
         for drName in drNames:
             for icName in icNames:
                 for CNNName in CNNNames:
-                    for accName in accNames:
-                        results = [normName, drName, icName, CNNName, accName, resultsList[index][0]]
-                        newList.append(results)
-                        index += 1
+                    results = [normName, drName, icName, CNNName, resultsList[index][1], resultsList[index][2], resultsList[index][3]]
+                    newList.append(results)
+                    index += 1
 
     # Save the final result at csv file with descending sort
-    columnNames = ['normName', 'drName', 'icName', 'CNNName', 'accName', 'accuracy']
+    columnNames = ['normName', 'drName', 'icName', 'CNNName', 'accuracy', 'f1_score_weighted', 'f1_score_macro']
     df = pd.DataFrame(newList, columns = columnNames)
     df.sort_values(by = 'accuracy', ascending=False, inplace=True)
     df.to_csv('results/accuracies/testResults.csv', index = False)

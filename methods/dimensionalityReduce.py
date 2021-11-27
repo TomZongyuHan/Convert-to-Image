@@ -5,6 +5,7 @@ from sklearn.decomposition import PCA
 from sklearn.decomposition import KernelPCA
 from sklearn.manifold import TSNE
 import phate
+import umap
 
 
 # Implement and run dimensionality reduction methods
@@ -41,10 +42,13 @@ def dimensionalityReduce(normalizedDataset, drName):
         drMethod = KernelPCA(n_components=componentNum, kernel='cosine', n_jobs=-1)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'tsne':
-        drMethod = TSNE(n_components=componentNum, n_jobs=-1, method='exact')
+        drMethod = TSNE(n_components=2, n_jobs=-1, method='exact')
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     elif drName == 'phate':
-        drMethod = phate.PHATE(n_components=componentNum, n_jobs=-1)
+        drMethod = phate.PHATE(n_components=2, n_jobs=-1)
+        drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
+    elif drName == 'umap':
+        drMethod = umap.UMAP(n_components=componentNum)
         drDatasetT = drMethod.fit_transform(normalizedDatasetT.values)
     else:
         print("????? Please enter a correct normalize name ?????")
