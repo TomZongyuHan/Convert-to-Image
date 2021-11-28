@@ -17,7 +17,6 @@ import pandas as pd
 # Output:
 #   normalizedDataset: the variable store normalized dataset
 def dataCleanAndNormalize(filepath, isRowCount, normName):
-    # print("Normalizing......")
     # Transform variable 'isRowCount' to String
     if (isRowCount):
         isRowCount = 'TRUE'
@@ -37,11 +36,16 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
     ''')
 
     # Import R's packages
-    importr('Linnorm')  # for linnorm
-    importr('scone')  # for scone/TTM
-    importr('edgeR')  # for cpm
-    importr('Seurat')  # for seurat
-    importr('scran')  # for scran
+    # for linnorm
+    importr('Linnorm')
+    # for scone/TTM
+    importr('scone')
+    # for cpm
+    importr('edgeR')
+    # for seurat
+    importr('Seurat')
+    # for scran
+    importr('scran')
 
     robjects.r("""
         # This function used to read, clean and normalize data
@@ -121,8 +125,3 @@ def dataCleanAndNormalize(filepath, isRowCount, normName):
 
     # Return processed dataset
     return normalized_dataset
-
-# Test
-# filepath = '../originalDatasets/' + 'test-RowCount.csv'
-# normalized_dataset = dataCleanAndNormalize(filepath, True, "linnorm")
-# display(normalized_dataset)

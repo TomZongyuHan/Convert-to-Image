@@ -18,7 +18,6 @@ from tqdm import tqdm
 # Output:
 #   result: the list of CNN train result
 def CNNTrain(augmentedDataset, CNNName):
-    # print("Training......")
     torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
 
     # Check if can use cuda to run cnn train
@@ -114,7 +113,6 @@ def trainModel(model, trainloader):
     lowChangeNum = 0
     for epoch in tqdm(range(epochMaxNum)):
         model.train()
-        # running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
@@ -127,7 +125,6 @@ def trainModel(model, trainloader):
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
-            # running_loss += loss.item()
         
         results, labels = evaluateData(model, trainloader)
         accuracy = accuracy_score(results, labels)

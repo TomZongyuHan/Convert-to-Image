@@ -19,9 +19,7 @@ import umap
 #   drDataset: the variable of datasets after dimensionality reduce
 #   list of drMethod and normalizedDataset: if use returnMethod
 def dimensionalityReduce(normalizedDataset, drName):
-    # print("Dimension Reducing......")
     # Transpose the dataset for dimensionality reduction
-    # normalizedDatasetT = np.transpose(normalizedDataset)
     normalizedDatasetT = normalizedDataset.transpose()
     labels = normalizedDataset.columns.tolist()
     featureNum = len(labels)
@@ -55,20 +53,6 @@ def dimensionalityReduce(normalizedDataset, drName):
 
     # Transpose the dataset for results
     drDataset = drDatasetT.transpose()
-    
 
     # Return the result
     return [drName, normalizedDataset, drDataset, labels]
-
-
-# Test
-# from methods import dataCleanAndNormalize
-#
-# filepath = '../originalDatasets/' + 'TabulaMuris_Thymus_10X-RowCount.csv'
-# normalizedDataset = dataCleanAndNormalize.dataCleanAndNormalize(filepath, True, "linnorm")
-#
-# res = dimensionalityReduce(normalizedDataset, 'pca')
-# print(res[0])
-# print(res[1])
-# print(res[2])
-# print(res[3])

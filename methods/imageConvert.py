@@ -26,7 +26,6 @@ import umap
 #       imageDataset[2] is y train data
 #       imageDataset[3] is y test data
 def imageConvert(drResult, icName):
-    # print("Image converting......")
     # Run image convert methods
     if icName == 'deepinsight':
         drName = drResult[0]
